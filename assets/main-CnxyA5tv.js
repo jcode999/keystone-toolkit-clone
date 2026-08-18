@@ -83,6 +83,8 @@ const globals = {
   // Product
   recent_products: app.recent_products,
   // {array} Recently viewed products
+  variant_search_text: app.variant_search_text,
+  // {string} Filter out product variants
   // Discount properties
   discount_text: app.discount_text,
   // {string} Text for the discount
@@ -1233,6 +1235,62 @@ const products = {
   // Zoom out of gallery image
   galleryZoomOut() {
     this["gallery_zoom_" + this.gallery_index] = false;
+  },
+  filteredVariants() {
+    let variants = [...this.variants];
+    if (this.search.trim()) {
+      const search2 = this.search.trim().toLowerCase();
+      variants = variants.filter(
+        (variant) => variant.title.toLowerCase().includes(search2)
+      );
+    }
+    variants.sort((a, b) => {
+      let aValue;
+      let bValue;
+      switch (this.sortBy) {
+        case "price":
+          aValue = a.price;
+          bValue = b.price;
+          break;
+        case "availability":
+          aValue = a.available ? 1 : 0;
+          bValue = b.available ? 1 : 0;
+          break;
+        case "title":
+        default:
+          aValue = a.title.toLowerCase();
+          bValue = b.title.toLowerCase();
+          break;
+      }
+      if (aValue < bValue) {
+        return this.sortDirection === "asc" ? -1 : 1;
+      }
+      if (aValue > bValue) {
+        return this.sortDirection === "asc" ? 1 : -1;
+      }
+      return 0;
+    });
+    return variants;
+  },
+  // placeholder for the root element instance; avoid assigning the HTMLElement constructor
+  // $root: null as unknown as HTMLElement,
+  filter(filter_text, root) {
+    console.log("filter text:", filter_text);
+    const query = filter_text.toLowerCase().trim();
+    console.log(this.root);
+    const rows = this.$root.querySelectorAll(
+      '.js-results > div, [class*="js-pagination-landing-"] > div'
+    );
+    rows.forEach((row) => {
+      var _a, _b;
+      console.log("row title:", row.dataset.variantTitle);
+      const title = ((_a = row.dataset.variantTitle) == null ? void 0 : _a.toLowerCase()) ?? "";
+      const sku = ((_b = row.dataset.variantSku) == null ? void 0 : _b.toLowerCase()) ?? "";
+      const matches2 = title.includes(query) || sku.includes(query);
+      row.hidden = !matches2;
+      row.classList.toggle("flex", matches2);
+      console.log("row hidden:", row.hidden);
+    });
   }
 };
 const collections = {

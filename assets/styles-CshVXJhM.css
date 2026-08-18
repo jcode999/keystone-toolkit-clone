@@ -2262,6 +2262,9 @@ img:after {
 .\!rounded-none {
   border-radius: 0px !important;
 }
+.rounded {
+  border-radius: 0.25rem;
+}
 .rounded-2xl {
   border-radius: 1rem;
 }
@@ -2386,6 +2389,10 @@ img:after {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -2509,6 +2516,10 @@ img:after {
 }
 .align-bottom {
   vertical-align: bottom;
+}
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 .font-bold {
   font-weight: 700;
