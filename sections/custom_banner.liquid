@@ -1,0 +1,32 @@
+{% schema %}
+{
+    "name":"Custom Banner",
+    "tag":"section",
+    "enabled_on": {
+        "templates": ["*"]
+    },
+    "settings": [
+        {
+            "type":"image_picker",
+            "id": "banner-image",
+            "label": "Banner Image",
+        },
+        {
+            "type": "url",
+            "id":"banner-link",
+            "label":"Banner Link"
+        }
+    ],
+    "presets": [
+		{
+			"name": "Custom Banner"
+		}]
+}
+{% endschema %}
+<section class="custom-banner">
+    <a href="{{ section.settings.banner-link }}">
+    <div class="image-container">
+        <img src="{{ section.settings.banner-image | image_url  }}" width="100%" height="100%">
+    </div>
+    </a>
+</section>

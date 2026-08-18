@@ -1,0 +1,12 @@
+{% assign discount_text = product.metafields.custom.on_sale %}
+{% if discount_text != blank %}
+	{% capture badge_content %}
+      {% render 'product__discount_text', product: product, size:18 %}
+    {% endcapture %}
+	{% render 'component__badge',
+		background: badge_background,
+		text: badge_foreground,
+		border: 'divider-1',
+		content: badge_content
+	%}
+{% endif %}

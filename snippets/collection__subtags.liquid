@@ -1,0 +1,72 @@
+<!-- snippets/collection__subtags.liquid -->
+{% comment %} 
+  Secondary navigation for collection pages. Use tags for quick filtering.
+
+  Globals:
+  - layout_horizontal: {string} Class string to set horizontal margin.
+
+  Usage:
+    {% render 'collection__subtags' %}
+
+  Recommendations:
+    - Use this snippet on collection templates.
+    - These links are populated using metafields. 
+{% endcomment %}
+
+{% assign raw_sub_tags = collection.metafields.custom.subtags %}
+{% if raw_sub_tags != blank %}
+  {% assign handleized_tags_string = '' %}
+  {% if current_tags != blank %}
+    {% for tag in current_tags %}
+      {% assign tag_handle = tag | handleize %}
+      {% if handleized_tags_string != '' %}
+        {% assign handleized_tags_string = handleized_tags_string | append: '|' %}
+      {% endif %}
+      {% assign handleized_tags_string = handleized_tags_string | append: tag_handle %}
+    {% endfor %}
+  {% endif %}
+  {% assign handleized_tags = handleized_tags_string | split: '|' %}
+  <section
+    class="
+      {{ section.settings.color_scheme }}
+    ">
+    <nav 
+      class="
+        flex py-2 border--b-width
+        {{ section.settings.color_border }}
+        {% if section.settings.enable_margin %}
+          {{ settings.x_margin }}
+        {% else %}
+          window--full
+        {% endif %}
+      ">
+      <div class="relative w-full window--max-width">
+        <div class="flex gap-1 p-1 overflow-x-auto color__bg-shade-2 border__button--radius whitespace-nowrap scroll-smooth snap-x">
+          <div class="flex justify-center flex-none snap-start">
+            <a href="{{ collection.url }}"
+              class="py-2 px-4 type--smaller no-underline
+              {% if current_tags == blank %}!color__bg-body{% endif %}">
+              {{ 'labels.all' | t }}
+            </a>
+          </div>
+          {% for item in raw_sub_tags.value %}
+            {% assign item_parts = item | split: ',' %}
+            {% assign item_label = item_parts | first %}
+            {% assign item_tag = item_parts | last %}
+            {% assign item_handle = item_tag | handle %}
+            {% assign item_tag_handleized = item_tag | handleize %}
+            <div class="flex justify-center flex-none snap-start">
+              <a href="{{ collection.url }}/{{ item_handle }}"
+                class="py-2 px-4 type--smaller no-underline
+                {% if current_tags != blank and handleized_tags contains item_tag_handleized %}
+                  !color__bg-body
+                {% endif %}">
+                {{ item_label }}
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </nav> 
+  </section>
+{% endif %}

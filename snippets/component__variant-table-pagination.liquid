@@ -1,0 +1,281 @@
+<!-- snippets/component__variant-table-pagination.liquid -->
+{% comment %}
+  Variant table component for product pages.
+
+  Accepts:
+  - product: {object} Product object.
+  - enable_default_rows: {boolean} Whether to display the default rows.
+
+  Usage:
+    {% render 'component__variant-table-pagination'
+      product: product,
+      enable_default_rows: false
+    %}
+
+  Recommendations:
+  - Use this snippet on a product page to display the variants in a table.
+{% endcomment %}
+
+{% if enable_default_rows %}
+  <div
+    class="js-results"
+  >
+    {% for variant in product.variants limit: 50 %}
+      {% liquid
+        assign displayed_inventory_quantity = variant.inventory_quantity
+        if variant.metafields.custom.total_inventory_all_locations.value != blank
+          assign displayed_inventory_quantity = variant.metafields.custom.total_inventory_all_locations.value | plus: 0
+        endif
+      %}
+      <div
+        class="
+          hover:color__bg-shade-1 flex items-center justify-between
+          {% unless forloop.first %}border--t-width color__border-divider-1{% endunless %}
+        "
+        :class="{ 'color__bg-shade-1': cartVariantIds.has({{ variant.id }}) }"
+        {% if forloop.index > 6 %}
+          x-show="expanded"
+          x-cloak
+        {% endif %}
+      >
+        {% comment %} Details {% endcomment %}
+        <div class="flex h-full flex-row items-stretch justify-between md:w-2/3">
+          {% comment %} Image, title, sku {% endcomment %}
+          <div class="flex flex-row items-center gap-2 py-2 md:w-1/3">
+            {% comment %} Image {% endcomment %}
+            {% if product.has_only_default_variant == false and variant.image %}
+              <div
+                class="border--radius border--width color__border-divider-1 h-10 w-10 shrink-0 cursor-zoom-in overflow-hidden"
+                @click="
+                  button_loading = true;
+                  fetchAndRenderQuickGallery('{{ product.handle }}', '{{ variant.image.id }}');
+                  setTimeout(function(){ button_loading = false}, 500);
+                "
+              >
+                {% render 'component__image',
+                  image: variant.image,
+                  max_width: 80,
+                  background_class: 'h-full color__bg-shade-2',
+                  container_class: 'h-full',
+                  image_class: '',
+                  ratio_class: '',
+                  crop_class: crop,
+                  enable_lazy_load: true,
+                  enable_2x: true
+                %}
+              </div>
+            {% endif %}
+
+            {% comment %} Title and details {% endcomment %}
+            <div class="flex w-auto flex-col items-start justify-center pr-4">
+              <a
+                class="type--smaller no-underline"
+                href="{{ variant.url }}"
+              >
+                {% unless variant.title == 'Default Title' %}
+                  {{ variant.title }}
+                {% endunless %}
+              </a>
+              {% if variant.sku and settings.product_table_enable_sku %}
+                <span class="type--smaller opacity-75">
+                  {{ variant.sku }}
+                </span>
+              {% endif %}
+
+              {% if settings.product_table_enable_inventory %}
+                <div class="flex flex-col text-right md:hidden">
+                  <span class="type--smaller opacity-75">
+                    {{ displayed_inventory_quantity }}
+                    {{ 'info.in_stock' | t | downcase }}
+                  </span>
+                </div>
+              {% endif %}
+
+              <div class="flex flex-col text-right md:hidden">
+                <span class="type--smaller opacity-75">
+                  {% render 'component__format-price', price: variant.price %} /{{ 'labels.each' | t | downcase }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {% comment %} Metafields,inventory, prices {% endcomment %}
+          <div class="border--l-width color__border-divider-1 hidden flex-wrap gap-2 overflow-auto px-4 py-2 md:flex md:w-2/3 md:content-start lg:flex-row">
+            {% comment %} Metafields {% endcomment %}
+            {% if settings.product_table_variant_metafields %}
+              {% assign all_metafields = settings.product_table_variant_metafields | split: ',' %}
+              {% assign all_metafields_labels = settings.product_table_variant_metafields_labels | split: ',' %}
+              {% for metafield_string in all_metafields %}
+                <div class="type--smaller w-[25%] min-w-16">
+                  {% assign metafield_parts = metafield_string | strip | split: '.' %}
+                  {% if metafield_parts.size == 2 %}
+                    {% assign namespace = metafield_parts[0] | strip %}
+                    {% assign key = metafield_parts[1] | strip %}
+                    {% if variant.metafields[namespace][key].value %}
+                      {% if all_metafields_labels[forloop.index0] %}
+                        <span class="opacity-50">{{ all_metafields_labels[forloop.index0] }}:</span><br>
+                      {% endif %}
+                      {{ variant.metafields[namespace][key].value }}
+                    {% endif %}
+                  {% endif %}
+                </div>
+              {% endfor %}
+            {% endif %}
+
+            {% comment %} Inventory count and price {% endcomment %}
+            <div class="flex flex-grow justify-start gap-2">
+              {% if settings.product_table_enable_inventory %}
+                <div class="flex w-[25%] min-w-16 flex-col">
+                  <span class="type--smaller">
+                    {{ displayed_inventory_quantity }}
+                  </span>
+                  <span class="type--smaller opacity-75">
+                    {{ 'info.in_stock' | t | downcase }}
+                  </span>
+                </div>
+              {% endif %}
+
+              <div class="flex w-[25%] min-w-16 flex-col">
+                <span class="type--smaller">
+                  {% render 'component__format-price', price: variant.price %}
+                </span>
+                <span class="type--smaller opacity-75"> /{{ 'labels.each' | t | downcase }} </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% comment %} Actions and totals {% endcomment %}
+        <div class="flex h-full shrink-0 flex-col items-end justify-between gap-4 text-right md:w-1/3 md:max-w-[400px]">
+          <div class="border--l-width color__border-divider-1 flex h-full w-full items-center justify-end py-2 pl-4">
+            {% render 'component__variant-increment',
+              variant: variant,
+              show_totals: true,
+              parent_class: 'w-full',
+              container_class: 'gap-4 md:gap-10 md:max-w-[400px]',
+              input_class: 'max-w-[150px]',
+              is_overlay: is_overlay
+            %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% comment %} Variants {% endcomment %}
+{% paginate product.variants by 50 %}
+  {% if enable_default_rows %}
+    {% if paginate.pages > 1 %}
+      <div class="js-pagination-landing-{{ product.id }}-{{ section.id }}"></div>
+      <section
+        class="type--small"
+        x-data="
+          {
+            button_loading: false,
+            pagination_total_pages: {{ paginate.pages }},
+            pagination_current_page: {{ paginate.current_page }},
+            pagination_load_more_button: true
+          }
+        "
+        x-show="pagination_load_more_button"
+      >
+        <button
+          class="hover:color__bg-shade-1 w-full py-4 text-left font-bold"
+          @click="
+            this.pagination_loading = true;
+            expanded = true;
+            pagination_current_page += 1;
+            fetchAndRenderTableRows(
+              '{{ product.handle }}',
+              pagination_total_pages,
+              pagination_current_page,
+              'variant-table',
+              '.js-pagination-landing-{{ product.id }}-{{ section.id }}'
+            );
+            setTimeout(function(){ this.pagination_loading = false}, 1000);
+          "
+          role="button"
+        >
+          <span class="flex justify-between gap-2">
+            <span class="font-bold">
+              {{ 'actions.load_variants' | t }}
+              (<span class="font-bold" x-show="pagination_current_page == 1">6</span
+              ><span
+                class="font-bold"
+                x-show="pagination_current_page > 1"
+                x-text="pagination_current_page * 50"
+              ></span>
+              {{ 'labels.of' | t | downcase }}
+              {{ product.variants_count }})
+            </span>
+            <span>
+              {% render 'component__icon', icon: 'chevron-down', size: '16' %}
+            </span>
+          </span>
+        </button>
+      </section>
+    {% else %}
+      {% if product.variants_count > 6 %}
+        <section
+          class="type--small"
+          x-show="!expanded"
+          x-cloak
+        >
+          <button
+            class="hover:color__bg-shade-1 w-full py-4 text-left font-bold"
+            @click="expanded = true;"
+            role="button"
+          >
+            {{ 'actions.load_more' | t }} (6 {{ 'labels.of' | t | downcase }}
+            {{ product.variants_count }})
+          </button>
+        </section>
+      {% endif %}
+    {% endif %}
+  {% else %}
+    <div class="js-pagination-landing-{{ product.id }}-{{ section.id }}"></div>
+    <section
+      class="type--small"
+      x-data="
+        {
+          button_loading: false,
+          pagination_total_pages: {{ paginate.pages }},
+          pagination_current_page: 0,
+          pagination_load_more_button: true
+        }
+      "
+      x-show="pagination_load_more_button"
+    >
+      <button
+        class="hover:color__bg-shade-1 w-full py-4 text-left font-bold"
+        @click="
+          this.pagination_loading = true;
+          expanded = true;
+          pagination_current_page += 1;
+          fetchAndRenderTableRows(
+            '{{ product.handle }}',
+            pagination_total_pages,
+            pagination_current_page,
+            'variant-table',
+            '.js-pagination-landing-{{ product.id }}-{{ section.id }}'
+          );
+          setTimeout(function(){ this.pagination_loading = false}, 1000);
+        "
+        role="button"
+      >
+        <span class="flex justify-between gap-2">
+          <span class="font-bold">
+            {{ 'actions.load_variants' | t }}
+            (<span class="font-bold" x-text="pagination_current_page * 50"></span>
+            {{ 'labels.of' | t | downcase }}
+            {{ product.variants_count }})
+          </span>
+          <span>
+            {% render 'component__icon', icon: 'chevron-down', size: '16' %}
+          </span>
+        </span>
+      </button>
+    </section>
+  {% endif %}
+{% endpaginate %}

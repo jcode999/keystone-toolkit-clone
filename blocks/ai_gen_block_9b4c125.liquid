@@ -1,0 +1,692 @@
+{% doc %}
+  @prompt
+    Create a single "Add to Cart" button for a product page with multiple variants. Each variant should have its own quantity input field. When the user clicks the single "Add to Cart" button, all variants with a quantity greater than 0 are added to the cart simultaneously. The button should be disabled or hidden if no variants have a quantity greater than 0.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-multi-variant-cart-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    padding: {{ block.settings.container_padding }}px;
+    background-color: {{ block.settings.background_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+  }
+
+  .ai-multi-variant-cart__heading-{{ ai_gen_id }} {
+    margin: 0 0 {{ block.settings.spacing }}px;
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.heading_size }}px;
+  }
+
+  .ai-multi-variant-cart__variants-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: {{ block.settings.spacing }}px;
+    margin-bottom: {{ block.settings.spacing }}px;
+  }
+
+  .ai-multi-variant-cart__variant-row-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background-color: {{ block.settings.row_background_color }};
+    border-radius: {{ block.settings.row_border_radius }}px;
+    border: 1px solid {{ block.settings.row_border_color }};
+  }
+
+  .ai-multi-variant-cart__variant-info-{{ ai_gen_id }} {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .ai-multi-variant-cart__variant-title-{{ ai_gen_id }} {
+    margin: 0 0 4px;
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.variant_title_size }}px;
+    font-weight: 600;
+  }
+
+  .ai-multi-variant-cart__variant-price-{{ ai_gen_id }} {
+    margin: 0;
+    color: {{ block.settings.price_color }};
+    font-size: {{ block.settings.price_size }}px;
+  }
+
+  .ai-multi-variant-cart__variant-stock-{{ ai_gen_id }} {
+    margin: 4px 0 0;
+    color: {{ block.settings.stock_color }};
+    font-size: 12px;
+  }
+
+  .ai-multi-variant-cart__variant-unavailable-{{ ai_gen_id }} {
+    color: {{ block.settings.unavailable_color }};
+    font-size: 12px;
+    font-style: italic;
+  }
+
+  .ai-multi-variant-cart__quantity-wrapper-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ai-multi-variant-cart__quantity-label-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .ai-multi-variant-cart__quantity-input-{{ ai_gen_id }} {
+    width: 80px;
+    padding: 8px 12px;
+    border: 1px solid {{ block.settings.input_border_color }};
+    border-radius: {{ block.settings.input_border_radius }}px;
+    background-color: {{ block.settings.input_background_color }};
+    color: {{ block.settings.text_color }};
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .ai-multi-variant-cart__quantity-input-{{ ai_gen_id }}:focus {
+    outline: 2px solid {{ block.settings.button_color }};
+    outline-offset: 2px;
+  }
+
+  .ai-multi-variant-cart__quantity-input-{{ ai_gen_id }}:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .ai-multi-variant-cart__button-wrapper-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: {{ block.settings.button_alignment }};
+  }
+
+  .ai-multi-variant-cart__button-{{ ai_gen_id }} {
+    padding: {{ block.settings.button_padding }}px {{ block.settings.button_padding | times: 2 }}px;
+    background-color: {{ block.settings.button_color }};
+    color: {{ block.settings.button_text_color }};
+    border: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-size: {{ block.settings.button_font_size }}px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+  }
+
+  .ai-multi-variant-cart__button-{{ ai_gen_id }}:hover:not(:disabled) {
+    background-color: {{ block.settings.button_hover_color }};
+  }
+
+  .ai-multi-variant-cart__button-{{ ai_gen_id }}:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .ai-multi-variant-cart__button-{{ ai_gen_id }}:focus {
+    outline: 2px solid {{ block.settings.button_color }};
+    outline-offset: 2px;
+  }
+
+  .ai-multi-variant-cart__button-{{ ai_gen_id }}.hidden {
+    display: none;
+  }
+
+  .ai-multi-variant-cart__message-{{ ai_gen_id }} {
+    margin-top: {{ block.settings.spacing }}px;
+    padding: 12px;
+    border-radius: {{ block.settings.row_border_radius }}px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .ai-multi-variant-cart__message-{{ ai_gen_id }}.success {
+    background-color: {{ block.settings.success_bg_color }};
+    color: {{ block.settings.success_text_color }};
+  }
+
+  .ai-multi-variant-cart__message-{{ ai_gen_id }}.error {
+    background-color: {{ block.settings.error_bg_color }};
+    color: {{ block.settings.error_text_color }};
+  }
+
+  .ai-multi-variant-cart__message-{{ ai_gen_id }}.hidden {
+    display: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-multi-variant-cart__variant-row-{{ ai_gen_id }} {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .ai-multi-variant-cart__quantity-wrapper-{{ ai_gen_id }} {
+      justify-content: space-between;
+    }
+
+    .ai-multi-variant-cart__quantity-input-{{ ai_gen_id }} {
+      flex: 1;
+      max-width: 120px;
+    }
+  }
+{% endstyle %}
+
+<multi-variant-cart-{{ ai_gen_id }}
+  class="ai-multi-variant-cart-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+  data-product-id="{{ product.id }}"
+>
+  {% if block.settings.heading != blank %}
+    <h3 class="ai-multi-variant-cart__heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h3>
+  {% endif %}
+
+  <div class="ai-multi-variant-cart__variants-{{ ai_gen_id }}">
+    {% for variant in product.variants %}
+      <div
+        class="ai-multi-variant-cart__variant-row-{{ ai_gen_id }}"
+        data-variant-id="{{ variant.id }}"
+        data-variant-available="{{ variant.available }}"
+      >
+        <div class="ai-multi-variant-cart__variant-info-{{ ai_gen_id }}">
+          <h4 class="ai-multi-variant-cart__variant-title-{{ ai_gen_id }}">
+            {{ variant.title }}
+          </h4>
+          <p class="ai-multi-variant-cart__variant-price-{{ ai_gen_id }}">
+            {{ variant.price | money }}
+          </p>
+          {% if variant.available %}
+            {% if block.settings.show_inventory and variant.inventory_management %}
+              {% if variant.inventory_quantity > 0 %}
+                <p class="ai-multi-variant-cart__variant-stock-{{ ai_gen_id }}">
+                  {{ variant.inventory_quantity }} in stock
+                </p>
+              {% endif %}
+            {% endif %}
+          {% else %}
+            <p class="ai-multi-variant-cart__variant-unavailable-{{ ai_gen_id }}">
+              Out of stock
+            </p>
+          {% endif %}
+        </div>
+
+        <div class="ai-multi-variant-cart__quantity-wrapper-{{ ai_gen_id }}">
+          <label
+            for="quantity-{{ variant.id }}-{{ ai_gen_id }}"
+            class="ai-multi-variant-cart__quantity-label-{{ ai_gen_id }}"
+          >
+            Quantity:
+          </label>
+          <input
+            type="number"
+            id="quantity-{{ variant.id }}-{{ ai_gen_id }}"
+            class="ai-multi-variant-cart__quantity-input-{{ ai_gen_id }}"
+            min="0"
+            max="{{ variant.inventory_quantity }}"
+            value="0"
+            data-variant-id="{{ variant.id }}"
+            {% unless variant.available %}disabled{% endunless %}
+          >
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="ai-multi-variant-cart__button-wrapper-{{ ai_gen_id }}">
+    <button
+      type="button"
+      class="ai-multi-variant-cart__button-{{ ai_gen_id }} {% if block.settings.hide_when_disabled %}hidden{% endif %}"
+      {% if block.settings.hide_when_disabled == false %}disabled{% endif %}
+    >
+      {{ block.settings.button_text }}
+    </button>
+  </div>
+
+  <div class="ai-multi-variant-cart__message-{{ ai_gen_id }} hidden"></div>
+</multi-variant-cart-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class MultiVariantCart{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.button = this.querySelector('.ai-multi-variant-cart__button-{{ ai_gen_id }}');
+        this.quantityInputs = this.querySelectorAll('.ai-multi-variant-cart__quantity-input-{{ ai_gen_id }}');
+        this.messageEl = this.querySelector('.ai-multi-variant-cart__message-{{ ai_gen_id }}');
+        this.hideWhenDisabled = {{ block.settings.hide_when_disabled | json }};
+      }
+
+      connectedCallback() {
+        this.setupEventListeners();
+        this.updateButtonState();
+      }
+
+      setupEventListeners() {
+        this.quantityInputs.forEach(input => {
+          input.addEventListener('input', () => this.updateButtonState());
+          input.addEventListener('change', () => this.validateQuantity(input));
+        });
+
+        this.button.addEventListener('click', () => this.addToCart());
+      }
+
+      validateQuantity(input) {
+        const value = parseInt(input.value) || 0;
+        const max = parseInt(input.max) || Infinity;
+        
+        if (value < 0) {
+          input.value = 0;
+        } else if (max !== Infinity && value > max) {
+          input.value = max;
+        }
+        
+        this.updateButtonState();
+      }
+
+      updateButtonState() {
+        const hasQuantity = Array.from(this.quantityInputs).some(input => {
+          return parseInt(input.value) > 0;
+        });
+
+        if (this.hideWhenDisabled) {
+          if (hasQuantity) {
+            this.button.classList.remove('hidden');
+          } else {
+            this.button.classList.add('hidden');
+          }
+        } else {
+          this.button.disabled = !hasQuantity;
+        }
+      }
+
+      async addToCart() {
+        const items = [];
+        
+        this.quantityInputs.forEach(input => {
+          const quantity = parseInt(input.value) || 0;
+          if (quantity > 0) {
+            items.push({
+              id: input.dataset.variantId,
+              quantity: quantity
+            });
+          }
+        });
+
+        if (items.length === 0) {
+          return;
+        }
+
+        this.button.disabled = true;
+        this.hideMessage();
+
+        try {
+          const response = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ items })
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to add items to cart');
+          }
+
+          const data = await response.json();
+          
+          this.showMessage('Items added to cart successfully!', 'success');
+          
+          this.quantityInputs.forEach(input => {
+            input.value = 0;
+          });
+          
+          this.updateButtonState();
+          
+          if (window.theme && window.theme.cart) {
+            window.theme.cart.refresh();
+          }
+          
+          document.dispatchEvent(new CustomEvent('cart:updated'));
+          
+        } catch (error) {
+          console.error('Error adding to cart:', error);
+          this.showMessage('Error adding items to cart. Please try again.', 'error');
+          this.button.disabled = false;
+        }
+      }
+
+      showMessage(text, type) {
+        this.messageEl.textContent = text;
+        this.messageEl.className = 'ai-multi-variant-cart__message-{{ ai_gen_id }} ' + type;
+      }
+
+      hideMessage() {
+        this.messageEl.className = 'ai-multi-variant-cart__message-{{ ai_gen_id }} hidden';
+      }
+    }
+
+    customElements.define('multi-variant-cart-{{ ai_gen_id }}', MultiVariantCart{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Multi-variant add to cart",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Select quantities"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Add selected to cart"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_inventory",
+      "label": "Show inventory count",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Button behavior"
+    },
+    {
+      "type": "radio",
+      "id": "hide_when_disabled",
+      "label": "When no quantities selected",
+      "options": [
+        {
+          "value": "true",
+          "label": "Hide button"
+        },
+        {
+          "value": "false",
+          "label": "Disable button"
+        }
+      ],
+      "default": "false"
+    },
+    {
+      "type": "select",
+      "id": "button_alignment",
+      "label": "Button alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Right"
+        }
+      ],
+      "default": "flex-start"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "container_padding",
+      "label": "Container padding",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "spacing",
+      "label": "Spacing",
+      "min": 8,
+      "max": 32,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#f9f9f9"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#1b1b1b"
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Price",
+      "default": "#846D53"
+    },
+    {
+      "type": "color",
+      "id": "stock_color",
+      "label": "Stock text",
+      "default": "#008060"
+    },
+    {
+      "type": "color",
+      "id": "unavailable_color",
+      "label": "Unavailable text",
+      "default": "#D82C0D"
+    },
+    {
+      "type": "header",
+      "content": "Variant rows"
+    },
+    {
+      "type": "color",
+      "id": "row_background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "row_border_color",
+      "label": "Border",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "range",
+      "id": "row_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Input fields"
+    },
+    {
+      "type": "color",
+      "id": "input_background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "input_border_color",
+      "label": "Border",
+      "default": "#cccccc"
+    },
+    {
+      "type": "range",
+      "id": "input_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Button style"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Background",
+      "default": "#846D53"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_color",
+      "label": "Hover background",
+      "default": "#6b5842"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "button_padding",
+      "label": "Padding",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 16,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "variant_title_size",
+      "label": "Variant title size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "price_size",
+      "label": "Price size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Messages"
+    },
+    {
+      "type": "color",
+      "id": "success_bg_color",
+      "label": "Success background",
+      "default": "#d4edda"
+    },
+    {
+      "type": "color",
+      "id": "success_text_color",
+      "label": "Success text",
+      "default": "#155724"
+    },
+    {
+      "type": "color",
+      "id": "error_bg_color",
+      "label": "Error background",
+      "default": "#f8d7da"
+    },
+    {
+      "type": "color",
+      "id": "error_text_color",
+      "label": "Error text",
+      "default": "#721c24"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Container border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "Multi-variant add to cart"
+    }
+  ]
+}
+{% endschema %}

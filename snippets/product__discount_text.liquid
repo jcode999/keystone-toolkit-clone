@@ -1,0 +1,7 @@
+
+{% assign discount_text = product.metafields.custom.on_sale %}
+        <span class="flex items-center gap-1">
+          {% render 'discount_percent_icon', size: 18 %}
+          {{ discount_text }}
+        </span>
+

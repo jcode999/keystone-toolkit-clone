@@ -1,0 +1,77 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "collection__banner",
+      "settings": {
+        "layout_y_spacing": "min-h-[100px] md:min-h-[150px]",
+        "color_scheme": "color__bg-body color__text",
+        "color_text": "color__text",
+        "color_border": "color__border-divider-1",
+        "enable_gradient": false,
+        "enable_background_overlay": false,
+        "style_border": "border--b-width",
+        "layout_y_alignment": "items-end",
+        "layout_x_alignment": "justify-start",
+        "enable_margin": true,
+        "enable_max_width": true,
+        "visibility": "",
+        "enable_description": true,
+        "enable_image": false
+      }
+    },
+    "grid": {
+      "type": "collection__main",
+      "settings": {
+        "spacing_top": 20,
+        "spacing_bottom": 20,
+        "color_scheme": "color__bg-body color__text",
+        "color_border": "color__border-divider-1",
+        "layout_row_desktop": 5,
+        "layout_row_mobile": 2,
+        "filter_placement": "top",
+        "layout_type": "grid",
+        "enable_expand_filters": true,
+        "enable_layout_toggle": true,
+        "enable_margin": false,
+        "enable_sort": true,
+        "enable_filter": true,
+        "show_details_button": true,
+        "show_variant_table": true,
+        "enable_default_rows": false,
+        "products_per_page": 20
+      }
+    },
+    "recent_slider_7hDakH": {
+      "type": "recent-slider",
+      "settings": {
+        "heading": "Recently viewed",
+        "content": "",
+        "spacing_top": 20,
+        "spacing_bottom": 20,
+        "color_scheme": "color__bg-body color__text",
+        "color_border": "color__border-divider-1",
+        "style_border": "border--b-width",
+        "card_width_mobile": 8,
+        "card_width_desktop": 3,
+        "layout_x_alignment": "justify-between",
+        "enable_margin": true,
+        "enable_split": false,
+        "visibility": ""
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "grid",
+    "recent_slider_7hDakH"
+  ]
+}

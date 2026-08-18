@@ -1,0 +1,13 @@
+{
+  "src/entrypoints/main.js": {
+    "file": "main-CUVlmCKl.js",
+    "name": "main",
+    "src": "src/entrypoints/main.js",
+    "isEntry": true
+  },
+  "src/entrypoints/styles.css": {
+    "file": "styles-Bn3Crjx0.css",
+    "src": "src/entrypoints/styles.css",
+    "isEntry": true
+  }
+}

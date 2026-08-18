@@ -1,0 +1,225 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page__main",
+      "disabled": true,
+      "settings": {
+        "spacing_top": 100,
+        "spacing_bottom": 100,
+        "color_scheme": "color__bg-body color__text",
+        "color_border": "color__border-divider-1",
+        "style_border": "",
+        "layout_x_alignment": "justify-start",
+        "enable_margin": true,
+        "enable_max_width": true,
+        "visibility": ""
+      }
+    },
+    "featured_product_J4JMzf": {
+      "type": "featured-product",
+      "blocks": {
+        "title_B3GycJ": {
+          "type": "title",
+          "settings": {
+            "content": "",
+            "spacing_top": 20,
+            "spacing_bottom": 10,
+            "color_scheme": "color__bg-transparent",
+            "color_border": "color__border-divider-1",
+            "style_border": "",
+            "position": "right",
+            "savings_badge": "none",
+            "enable_badges": true,
+            "enable_type": false,
+            "enable_vendor": false,
+            "enable_sku": false
+          }
+        },
+        "price_XztwKm": {
+          "type": "price",
+          "settings": {
+            "spacing_top": 10,
+            "spacing_bottom": 20,
+            "color_scheme": "color__bg-transparent",
+            "color_border": "color__border-divider-1",
+            "style_border": "border--b-width",
+            "position": "right"
+          }
+        },
+        "description_BkYMar": {
+          "type": "description",
+          "settings": {
+            "spacing_top": 20,
+            "spacing_bottom": 20,
+            "color_scheme": "btn--plain",
+            "color_border": "color__border-divider-1",
+            "style_border": "",
+            "position": "right",
+            "layout_x_alignment": "left",
+            "enable_accordion": false,
+            "enable_open": false
+          }
+        },
+        "table_mnKMpA": {
+          "type": "table",
+          "disabled": true,
+          "settings": {
+            "spacing_top": 10,
+            "spacing_bottom": 10,
+            "color_border": "color__border-divider-1",
+            "style_border": ""
+          }
+        },
+        "options_DiWhC3": {
+          "type": "options",
+          "settings": {
+            "spacing_top": 20,
+            "spacing_bottom": 0,
+            "color_scheme": "color__bg-transparent",
+            "color_border": "color__border-divider-1",
+            "style_border": "",
+            "position": "right"
+          }
+        },
+        "add_bUPfnk": {
+          "type": "add",
+          "settings": {
+            "content": "",
+            "spacing_top": 20,
+            "spacing_bottom": 20,
+            "color_scheme": "color__bg-transparent",
+            "color_border": "color__border-divider-1",
+            "color_button": "btn",
+            "style_border": "",
+            "position": "right",
+            "enable_quantity": true,
+            "enable_dynamic_checkout": false,
+            "enable_gift_card_recipient": false
+          }
+        }
+      },
+      "block_order": [
+        "title_B3GycJ",
+        "price_XztwKm",
+        "description_BkYMar",
+        "table_mnKMpA",
+        "options_DiWhC3",
+        "add_bUPfnk"
+      ],
+      "settings": {
+        "product": "puffco-peak-pro-new-with-3d-chamber-vaporizer",
+        "enable_default_variant": true,
+        "enable_default_plans": true,
+        "enable_default_selling_plan_widget": true,
+        "media_gallery_style": "slider",
+        "media_slider_size_desktop": 70,
+        "media_slider_size_mobile": 80,
+        "image_border": "!color__border-transparent",
+        "media_gallery_position": "left",
+        "enable_alt": true,
+        "enable_variant_images": false,
+        "enable_zoom": true,
+        "zoom_level": "scale-[1.5]",
+        "media_color_scheme": "color__bg-shade-1 color__text",
+        "media_border": "",
+        "media_ratio": "aspect-[1/1]",
+        "media_object_sizing": "cover",
+        "enable_ratio": true,
+        "spacing_top": 10,
+        "spacing_bottom": 10,
+        "color_scheme": "color__bg-body color__text",
+        "layout_column_width": 40,
+        "enable_media_margin": true,
+        "enable_main_margin": true
+      }
+    },
+    "product_grid_nii8p7": {
+      "type": "product-grid",
+      "blocks": {
+        "content_MgKc33": {
+          "type": "content",
+          "disabled": true,
+          "settings": {
+            "heading": "Block heading",
+            "content": "<p>Describe a product, make announcements, or inform customers about a promotion.</p>",
+            "button_label": "Button",
+            "url": "/",
+            "enable_autoplay": true,
+            "enable_mute_toggle": true,
+            "enable_loop": true,
+            "spacing_minimum_height": 250,
+            "enable_padding": true,
+            "color_scheme": "color__bg-overlay-1 color__text",
+            "color_text": "!color__text",
+            "color_border": "outline--width color__outline-divider-1",
+            "color_button": "btn--small btn--secondary",
+            "enable_gradient": false,
+            "layout_y_alignment": "justify-end",
+            "layout_x_alignment": "left",
+            "text_position": "below"
+          }
+        }
+      },
+      "block_order": [
+        "content_MgKc33"
+      ],
+      "settings": {
+        "collection": "electric-rigs",
+        "products_count": 9,
+        "heading": "Electric Dab Rigs",
+        "content": "<p>\"Stock up electric dab rigs from affordable options to premium selections!\"</p>",
+        "button_label": "View All",
+        "button_url": "shopify://collections/electric-rigs",
+        "spacing_top": 100,
+        "spacing_bottom": 100,
+        "color_scheme": "color__bg-body color__text",
+        "color_border": "color__border-divider-1",
+        "color_button": "btn btn--secondary",
+        "style_border": "border--b-width",
+        "layout_row_desktop": 5,
+        "layout_row_mobile": 1,
+        "layout_x_alignment": "justify-between",
+        "enable_margin": true,
+        "enable_split": false,
+        "visibility": ""
+      }
+    },
+    "product_table_XXrARz": {
+      "type": "product-table",
+      "settings": {
+        "collection": "nectar-collectors",
+        "heading": "Traditional Nectar Collectors",
+        "content": "",
+        "button_label": "View All",
+        "button_url": "shopify://collections/nectar-collectors",
+        "spacing_top": 100,
+        "spacing_bottom": 100,
+        "color_scheme": "color__bg-body color__text",
+        "color_border": "color__border-divider-1",
+        "color_button": "btn btn--secondary",
+        "style_border": "border--b-width",
+        "layout_x_alignment": "justify-between",
+        "enable_margin": true,
+        "enable_split": false,
+        "visibility": "",
+        "show_details_button": false,
+        "show_variant_table": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "featured_product_J4JMzf",
+    "product_grid_nii8p7",
+    "product_table_XXrARz"
+  ]
+}

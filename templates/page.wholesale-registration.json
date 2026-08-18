@@ -1,0 +1,54 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page__main",
+      "disabled": true,
+      "settings": {
+        "spacing_top": 100,
+        "spacing_bottom": 100,
+        "color_scheme": "color__bg-body color__text",
+        "color_border": "color__border-divider-1",
+        "style_border": "",
+        "layout_x_alignment": "justify-start",
+        "enable_margin": true,
+        "enable_max_width": true,
+        "visibility": ""
+      }
+    },
+    "1746748897ecda5ec8": {
+      "type": "apps",
+      "blocks": {
+        "bss_b2b_solution_form_9nFLRy": {
+          "type": "shopify://apps/bss-b2b-solution/blocks/form/451233f2-9631-4c49-8b6f-057e4ebcde7f",
+          "settings": {
+            "form_id": "29869"
+          }
+        }
+      },
+      "block_order": [
+        "bss_b2b_solution_form_9nFLRy"
+      ],
+      "settings": {
+        "spacing_top": 100,
+        "spacing_bottom": 100,
+        "color_scheme": "color__bg-body color__text",
+        "color_border": "color__border-divider-1",
+        "style_border": "border--b-width",
+        "enable_margin": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "1746748897ecda5ec8"
+  ]
+}

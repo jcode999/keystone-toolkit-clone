@@ -1,0 +1,52 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page__main",
+      "disabled": true,
+      "settings": {
+        "spacing_top": 100,
+        "spacing_bottom": 100,
+        "color_scheme": "color__bg-body color__text",
+        "color_border": "color__border-divider-1",
+        "style_border": "",
+        "layout_x_alignment": "justify-start",
+        "enable_margin": true,
+        "enable_max_width": true,
+        "visibility": ""
+      }
+    },
+    "text_DfxAgN": {
+      "type": "text",
+      "settings": {
+        "heading": "Application Received",
+        "content": "<p>Your application has been submitted. Please give us at least 48 hours to review your documents. Once approved, you will receive and email from us to set your password.</p><p>Thank you for choosing United Wholesale as your partner.</p>",
+        "button_label": "",
+        "button_url": "",
+        "spacing_top": 100,
+        "spacing_bottom": 100,
+        "color_scheme": "color__bg-body color__text",
+        "color_border": "color__border-divider-1",
+        "color_button": "btn btn--secondary",
+        "style_border": "border--b-width",
+        "style_text_alignment": "text-center",
+        "layout_x_alignment": "justify-center",
+        "layout_column_width": 50,
+        "enable_margin": true,
+        "visibility": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "text_DfxAgN"
+  ]
+}

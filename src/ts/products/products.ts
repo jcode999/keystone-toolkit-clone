@@ -1,3 +1,5 @@
+import { Shopify } from "../shopify/shopify";
+
 export const products = {
   // Update page when variant selection changes
   handleProductFormChange(
@@ -256,7 +258,7 @@ export const products = {
         // Set array of available groups
         this.current_variant_selling_group_ids =
           selectedVariant.selling_plan_allocations.map(
-            (allocation) => allocation.selling_plan_group_id,
+            (allocation: { selling_plan_group_id: any; }) => allocation.selling_plan_group_id,
           );
         this.current_variant_selling_group_ids.push("0");
 
@@ -270,7 +272,7 @@ export const products = {
 
         // Check if allocation exists with matching group and plan
         let matchingAllocation = selectedVariant.selling_plan_allocations.find(
-          (allocation) =>
+          (allocation: { selling_plan_group_id: any; selling_plan_id: number; }) =>
             allocation.selling_plan_group_id ===
               this.current_variant_selling_group_id &&
             allocation.selling_plan_id ===
@@ -281,7 +283,7 @@ export const products = {
         if (!matchingAllocation) {
           const firstAllocationInGroup =
             selectedVariant.selling_plan_allocations.find(
-              (allocation) =>
+              (allocation: { selling_plan_group_id: any; }) =>
                 allocation.selling_plan_group_id ===
                 this.current_variant_selling_group_id,
             );
@@ -322,7 +324,7 @@ export const products = {
             let savingSummary = "";
             let savingHighlight = "";
             sellingPlanData.price_adjustments.forEach(
-              (price_adjustment, index, array) => {
+              (price_adjustment: { value: any; order_count: string; value_type: any; }, index: number, array: string | any[]) => {
                 let savingValue = price_adjustment.value;
                 if (savingValue <= 0) return;
                 let savingsPercentLabel = "";

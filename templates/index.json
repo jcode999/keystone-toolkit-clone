@@ -1,0 +1,909 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "slideshow_e7pRwU": {
+      "type": "slideshow",
+      "blocks": {
+        "content_TMMTFq": {
+          "type": "content",
+          "settings": {
+            "heading": "",
+            "content": "",
+            "url": "https://united-wholesale.com/collections/disposable-vapes?&sort_by=title-ascending&min-val=0&max-val=65&filter.p.vendor=Foger",
+            "image_background_desktop": "shopify://shop_images/ChatGPT_Image_Aug_4_2026_01_53_18_PM.png",
+            "image_background_mobile": "shopify://shop_images/ChatGPT_Image_Aug_4_2026_01_55_44_PM.png",
+            "show_entire_image": true,
+            "show_video_background_mobile": true,
+            "button_label": "",
+            "button_url": "shopify://collections/all",
+            "color_button": "btn btn--minimal",
+            "secondary_button_label": "",
+            "secondary_button_url": "shopify://collections/all",
+            "secondary_color_button": "btn btn--minimal",
+            "color_scheme": "color__bg-secondary color__secondary",
+            "color_text": "!color__text",
+            "enable_gradient": false,
+            "enable_background_overlay": false,
+            "layout_y_alignment": "items-center",
+            "layout_x_alignment": "justify-center text-center"
+          }
+        },
+        "content_RPhWjn": {
+          "type": "content",
+          "settings": {
+            "heading": "",
+            "content": "",
+            "url": "https://united-wholesale.com/products/geek-bar-pulse-2-25k-disposable-vape-5-count-box",
+            "image_background_desktop": "shopify://shop_images/98CB4B83-E191-4D42-8DC3-930544B4AAE1.png",
+            "image_background_mobile": "shopify://shop_images/520D3956-D26D-463D-8AB2-344D920B3DD6.png",
+            "show_entire_image": true,
+            "show_video_background_mobile": true,
+            "button_label": "",
+            "button_url": "",
+            "color_button": "btn",
+            "secondary_button_label": "",
+            "secondary_button_url": "",
+            "secondary_color_button": "btn btn--neutral",
+            "color_scheme": "color__bg-overlay-1 color__text",
+            "color_text": "!color__text",
+            "enable_gradient": false,
+            "enable_background_overlay": false,
+            "layout_y_alignment": "items-center",
+            "layout_x_alignment": "justify-center text-center"
+          }
+        },
+        "content_hLD3KM": {
+          "type": "content",
+          "settings": {
+            "heading": "",
+            "content": "",
+            "url": "shopify://products/geek-bar-pulse-x2-50k-disposable-vape-5-count-box",
+            "image_background_desktop": "shopify://shop_images/27BE8E50-BCB7-445C-8C92-13587243AA3D.png",
+            "image_background_mobile": "shopify://shop_images/6CDDE55F-4B90-4D81-963F-F88B74E1E1EC.png",
+            "show_entire_image": true,
+            "show_video_background_mobile": true,
+            "button_label": "",
+            "button_url": "",
+            "color_button": "btn",
+            "secondary_button_label": "Button",
+            "secondary_button_url": "shopify://collections/all",
+            "secondary_color_button": "btn btn--neutral",
+            "color_scheme": "color__bg-overlay-1 color__text",
+            "color_text": "!color__text",
+            "enable_gradient": false,
+            "enable_background_overlay": false,
+            "layout_y_alignment": "items-center",
+            "layout_x_alignment": "justify-center text-center"
+          }
+        },
+        "content_cfNjHt": {
+          "type": "content",
+          "settings": {
+            "heading": "",
+            "content": "",
+            "url": "https://united-wholesale.com/products/polkadot-mushroom-adaptogenic-seltzer-drink-12oz-variety-pack-12ct",
+            "image_background_desktop": "shopify://shop_images/ChatGPT_Image_Jul_27_2026_03_47_28_PM.png",
+            "image_background_mobile": "shopify://shop_images/ChatGPT_Image_Jul_27_2026_03_44_51_PM.png",
+            "show_entire_image": true,
+            "show_video_background_mobile": true,
+            "button_label": "",
+            "button_url": "",
+            "color_button": "btn",
+            "secondary_button_label": "",
+            "secondary_button_url": "",
+            "secondary_color_button": "btn btn--neutral",
+            "color_scheme": "color__bg-neutral color__text",
+            "color_text": "!color__text",
+            "enable_gradient": false,
+            "enable_background_overlay": false,
+            "layout_y_alignment": "items-center",
+            "layout_x_alignment": "justify-center text-center"
+          }
+        },
+        "content_JDMdkx": {
+          "type": "content",
+          "settings": {
+            "heading": "",
+            "content": "",
+            "url": "https://united-wholesale.com/collections/lighter-butane-fluids",
+            "image_background_desktop": "shopify://shop_images/ChatGPT_Image_Jul_27_2026_04_06_06_PM.png",
+            "image_background_mobile": "shopify://shop_images/ChatGPT_Image_Jul_27_2026_04_12_57_PM.png",
+            "show_entire_image": true,
+            "show_video_background_mobile": true,
+            "button_label": "",
+            "button_url": "",
+            "color_button": "btn",
+            "secondary_button_label": "",
+            "secondary_button_url": "",
+            "secondary_color_button": "btn btn--neutral",
+            "color_scheme": "color__bg-overlay-1 color__text",
+            "color_text": "!color__text",
+            "enable_gradient": false,
+            "enable_background_overlay": false,
+            "layout_y_alignment": "items-center",
+            "layout_x_alignment": "justify-center text-center"
+          }
+        }
+      },
+      "block_order": [
+        "content_TMMTFq",
+        "content_RPhWjn",
+        "content_hLD3KM",
+        "content_cfNjHt",
+        "content_JDMdkx"
+      ],
+      "name": "t:sections.slideshow.name",
+      "settings": {
+        "auto_scroll_delay": 6,
+        "layout_y_spacing": "min-h-[350px] md:min-h-[450px]",
+        "color_border": "color__border-selected-1",
+        "style_border": "border--b-width",
+        "enable_margin": false,
+        "enable_border_margin": false,
+        "enable_max_width": false,
+        "visibility": ""
+      }
+    },
+    "product_slider_mkmygE": {
+      "type": "product-slider",
+      "blocks": {
+        "content_EtYHhC": {
+          "type": "content",
+          "disabled": true,
+          "settings": {
+            "heading": "Featured Products",
+            "content": "<p>Best Quality Available</p>",
+            "button_label": "Shop Now",
+            "url": "shopify://collections/best-sellers",
+            "image": "shopify://shop_images/Green_Retro_Smoke_And_Neon_Light_Music_Album_Cover.png",
+            "enable_autoplay": true,
+            "enable_mute_toggle": true,
+            "enable_loop": true,
+            "spacing_minimum_height": 0,
+            "enable_padding": true,
+            "color_scheme": "color__bg-secondary color__secondary",
+            "color_text": "!color__light",
+            "color_border": "outline--width color__outline-divider-1",
+            "color_button": "btn--small",
+            "enable_gradient": false,
+            "layout_y_alignment": "justify-end",
+            "layout_x_alignment": "center",
+            "text_position": "below"
+          }
+        }
+      },
+      "block_order": [
+        "content_EtYHhC"
+      ],
+      "settings": {
+        "collection": "www-united-wholesale-com-new-products",
+        "products_count": 10,
+        "heading": "New Arrivals",
+        "content": "<p><strong>Shop With Confidence </strong></p>",
+        "button_label": "View All",
+        "button_url": "shopify://collections/www-united-wholesale-com-new-products",
+        "spacing_top": 50,
+        "spacing_bottom": 50,
+        "color_scheme": "color__bg-neutral color__neutral",
+        "color_border": "color__border-divider-1",
+        "color_button": "btn btn--secondary",
+        "style_border": "border--b-width",
+        "style_size": "md:w-[25%] w-8/12",
+        "layout_x_alignment": "justify-between",
+        "layout_arrow_alignment": "justify-center",
+        "card_width_mobile": 8,
+        "card_width_desktop": 2,
+        "enable_margin": false,
+        "enable_split": false,
+        "visibility": "",
+        "enable_arrows": true,
+        "enable_indicators": true,
+        "enable_scrollbar": false
+      }
+    },
+    "banner_iJizX6": {
+      "type": "banner",
+      "blocks": {
+        "heading_WfdHP3": {
+          "type": "heading",
+          "settings": {
+            "content": "Smoke Odor Exterminator"
+          }
+        },
+        "content_ypxmbj": {
+          "type": "content",
+          "settings": {
+            "content": "<p>Giving you a dang decent 70-hour burn time, these wicked smelling 13oz candles will transform any wide open house or compact apartment into an orgasmically great smelling abode!</p>"
+          }
+        },
+        "buttons_qiD8CR": {
+          "type": "buttons",
+          "settings": {
+            "button_label": "Spray",
+            "button_url": "shopify://products/smoke-odor-spray-exterminator-7oz",
+            "color_button": "btn",
+            "secondary_button_label": "Candle",
+            "secondary_button_url": "shopify://products/smoke-odor-candle-13oz",
+            "secondary_color_button": "btn btn--neutral"
+          }
+        }
+      },
+      "block_order": [
+        "heading_WfdHP3",
+        "content_ypxmbj",
+        "buttons_qiD8CR"
+      ],
+      "name": "t:sections.banner.name",
+      "settings": {
+        "url": "https://united-wholesale.com/search?q=smoke+odor&type=page%2carticle%2cproduct",
+        "image_background_desktop": "shopify://shop_images/Smoke-Odor-Gummies-Jar-Candle.jpg",
+        "image_background_mobile": "shopify://shop_images/Smoke-Odor-Gummies-Jar-Candle.jpg",
+        "show_image": true,
+        "show_entire_image": false,
+        "show_video_background_mobile": true,
+        "layout_y_spacing": "min-h-[250px] md:min-h-[350px]",
+        "color_scheme": "color__bg-overlay-1 color__text",
+        "color_text": "color__light",
+        "color_border": "color__border-divider-1",
+        "enable_gradient": true,
+        "enable_background_overlay": false,
+        "style_border": "border--b-width",
+        "layout_y_alignment": "items-end",
+        "layout_x_alignment": "justify-start",
+        "enable_margin": true,
+        "enable_border_margin": false,
+        "enable_max_width": true,
+        "visibility": "",
+        "account_visibility": "always"
+      }
+    },
+    "navigation_links_RgBPtx": {
+      "type": "navigation-links",
+      "blocks": {
+        "link_Xw7Ur3": {
+          "type": "link",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/DOZO_Perks_Maximum_Strength_7_Hydroxy_4CT_Chewable_Tablets_50MG__58258.jpg",
+            "heading": "7-Hydroxymitragynine",
+            "url": "shopify://collections/7-hydroxy"
+          }
+        },
+        "link_jwn9Lm": {
+          "type": "link",
+          "settings": {
+            "image": "shopify://shop_images/070330644809.jpg",
+            "heading": "Basic Lighters",
+            "url": "shopify://collections/basic-lighters"
+          }
+        },
+        "link_8anifH": {
+          "type": "link",
+          "settings": {
+            "image": "shopify://shop_images/rn-image_picker_lib_temp_38e1ffb2-4cd0-4c03-a206-d821cffbb768.jpg",
+            "heading": "Torch Lighters",
+            "url": "shopify://collections/torch-lighters"
+          }
+        },
+        "link_ih9rcJ": {
+          "type": "link",
+          "settings": {
+            "image": "shopify://shop_images/Butane-12ct-King-5x.png",
+            "heading": "Butane | Fluids",
+            "url": "shopify://collections/lighter-butane-fluids"
+          }
+        },
+        "link_njFRNH": {
+          "type": "link",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/mangopineapple_103ed57c-8c54-4a6a-acaa-886e2e82576a.webp",
+            "heading": "Cream Chargers and Dispensers",
+            "url": "shopify://collections/cream-chargers-dispensers"
+          }
+        },
+        "link_D4BdyU": {
+          "type": "link",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/glass-pipes.webp",
+            "heading": "Hand Pipes",
+            "url": ""
+          }
+        },
+        "link_tht8pJ": {
+          "type": "link",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Lookah_Seahorse_Max_Dab_Pen_with_bubbler_Blue_c21c-yh_ju5q-zw.webp",
+            "heading": "Dab Supplies",
+            "url": "shopify://pages/dab-supplies"
+          }
+        },
+        "link_erhcrT": {
+          "type": "link",
+          "settings": {
+            "image": "shopify://shop_images/rn-image_picker_lib_temp_9b071683-1cc9-44e5-94e3-1a4444ab6fca.png",
+            "heading": "Pipe Cleaners",
+            "url": "shopify://collections/pipe-cleaners"
+          }
+        },
+        "link_WjFk8m": {
+          "type": "link",
+          "settings": {
+            "image": "shopify://shop_images/ZynNicotineWintergreenPack.webp",
+            "heading": "Nicotine Pouches",
+            "url": "shopify://collections/nicotine-pouches"
+          }
+        },
+        "link_Ti3TMb": {
+          "type": "link",
+          "settings": {
+            "image": "shopify://shop_images/cocoNara120.webp",
+            "heading": "Hookah Supplies",
+            "url": "shopify://collections/hookah"
+          }
+        }
+      },
+      "block_order": [
+        "link_Xw7Ur3",
+        "link_jwn9Lm",
+        "link_8anifH",
+        "link_ih9rcJ",
+        "link_njFRNH",
+        "link_D4BdyU",
+        "link_tht8pJ",
+        "link_erhcrT",
+        "link_WjFk8m",
+        "link_Ti3TMb"
+      ],
+      "settings": {
+        "spacing_top": 20,
+        "spacing_bottom": 20,
+        "color_scheme": "color__bg-body color__text",
+        "color_border": "color__border-divider-1",
+        "style_border": "border--b-width",
+        "style_size": "100",
+        "style_container": "grid",
+        "layout_x_alignment": "justify-center items-start",
+        "enable_margin": true,
+        "visibility": ""
+      }
+    },
+    "custom_collection_grid_6ajEEU": {
+      "type": "custom__collection_grid",
+      "blocks": {
+        "grid_card_Kg8irX": {
+          "type": "grid-card",
+          "settings": {
+            "card_link": "shopify://collections/all-ecigarattes",
+            "header": "E-Cigarettes",
+            "heading_color": "#fefffd",
+            "header_size": "large",
+            "header_position": "bottom-center",
+            "background_image": "shopify://shop_images/1_08f978f5-0ecb-4320-9366-3f3b93a79a09.png",
+            "background_size": "cover",
+            "column_span": 1,
+            "row_span": 1
+          }
+        },
+        "grid_card_Qf6Bq6": {
+          "type": "grid-card",
+          "disabled": true,
+          "settings": {
+            "card_link": "shopify://collections/all-hemp",
+            "header": "Hemp",
+            "heading_color": "#ffffff",
+            "header_size": "large",
+            "header_position": "bottom-center",
+            "background_image": "shopify://shop_images/3_b7564e88-e1cc-4841-9a1d-0c00cf425a62.png",
+            "background_size": "cover",
+            "column_span": 1,
+            "row_span": 1
+          }
+        },
+        "grid_card_NhdpWX": {
+          "type": "grid-card",
+          "disabled": true,
+          "settings": {
+            "card_link": "shopify://collections/all-kratom",
+            "header": "Kratom",
+            "heading_color": "#ffffff",
+            "header_size": "large",
+            "header_position": "bottom-center",
+            "background_image": "shopify://shop_images/2_d177c67a-704b-4bd5-867d-a79e10e8bf95.png",
+            "background_size": "cover",
+            "column_span": 1,
+            "row_span": 1
+          }
+        },
+        "grid_card_bDXdin": {
+          "type": "grid-card",
+          "disabled": true,
+          "settings": {
+            "card_link": "shopify://collections/edibles-1",
+            "header": "Mushroom",
+            "heading_color": "#ffffff",
+            "header_size": "large",
+            "header_position": "bottom-center",
+            "background_image": "shopify://shop_images/4_7d43882b-1252-4347-af8a-525193624f26.png",
+            "background_size": "cover",
+            "column_span": 1,
+            "row_span": 1
+          }
+        },
+        "grid_card_QHGhEy": {
+          "type": "grid-card",
+          "settings": {
+            "card_link": "shopify://collections/all-rolling-papers-accessories",
+            "header": "",
+            "heading_color": "",
+            "header_size": "medium",
+            "header_position": "top-left",
+            "background_image": "shopify://shop_images/5.png",
+            "background_size": "cover",
+            "column_span": 1,
+            "row_span": 1
+          }
+        },
+        "grid_card_7W7RiR": {
+          "type": "grid-card",
+          "settings": {
+            "card_link": "shopify://collections/all-incense-air-freshener",
+            "header": "",
+            "heading_color": "",
+            "header_size": "medium",
+            "header_position": "top-left",
+            "background_image": "shopify://shop_images/6.png",
+            "background_size": "cover",
+            "column_span": 1,
+            "row_span": 1
+          }
+        },
+        "grid_card_i4aWxg": {
+          "type": "grid-card",
+          "disabled": true,
+          "settings": {
+            "card_link": "shopify://collections/all-heath-and-beauty",
+            "header": "",
+            "heading_color": "",
+            "header_size": "medium",
+            "header_position": "top-left",
+            "background_image": "shopify://shop_images/health-beauty-2.png",
+            "background_size": "cover",
+            "column_span": 1,
+            "row_span": 1
+          }
+        }
+      },
+      "block_order": [
+        "grid_card_Kg8irX",
+        "grid_card_Qf6Bq6",
+        "grid_card_NhdpWX",
+        "grid_card_bDXdin",
+        "grid_card_QHGhEy",
+        "grid_card_7W7RiR",
+        "grid_card_i4aWxg"
+      ],
+      "custom_css": [],
+      "settings": {
+        "columns": 5,
+        "overlay_transperancy": 0,
+        "heading": "Explore our categories"
+      }
+    },
+    "product_slider_gdGpfr": {
+      "type": "product-slider",
+      "disabled": true,
+      "name": "t:sections.product_slider.name",
+      "settings": {
+        "collection": "back-in-stock",
+        "products_count": 12,
+        "heading": "Back In Stock",
+        "content": "",
+        "button_label": "View All",
+        "button_url": "shopify://collections/back-in-stock",
+        "spacing_top": 30,
+        "spacing_bottom": 30,
+        "color_scheme": "color__bg-body color__text",
+        "color_border": "color__border-divider-1",
+        "color_button": "btn btn--secondary",
+        "style_border": "border--b-width",
+        "style_size": "md:w-[25%] w-8/12",
+        "layout_x_alignment": "justify-between",
+        "layout_arrow_alignment": "justify-end",
+        "card_width_mobile": 6,
+        "card_width_desktop": 2,
+        "enable_margin": true,
+        "enable_split": false,
+        "visibility": "",
+        "enable_arrows": true,
+        "enable_indicators": false,
+        "enable_scrollbar": false
+      }
+    },
+    "logo_list_Tqbhcz": {
+      "type": "logo-list",
+      "blocks": {
+        "logo_L9AVkP": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/opia-logo-blue.jpg",
+            "logo_height": 44,
+            "enable_padding": true,
+            "color_scheme": "color__bg-body !color__text",
+            "color_border": "outline--width color__outline-divider-1",
+            "layout_row_span": "row-span-1",
+            "layout_col_span": "col-span-1 md:col-span-1"
+          }
+        },
+        "logo_6PAELd": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/fvkd-exotics-brand-logo.webp",
+            "logo_height": 40,
+            "enable_padding": true,
+            "color_scheme": "color__bg-body !color__text",
+            "color_border": "outline--width color__outline-divider-1",
+            "layout_row_span": "row-span-1",
+            "layout_col_span": "col-span-1 md:col-span-1"
+          }
+        },
+        "logo_ey3eRy": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/geekd-extracts-brand-logo.jpg",
+            "logo_height": 44,
+            "enable_padding": true,
+            "color_scheme": "color__bg-body !color__text",
+            "color_border": "outline--width color__outline-divider-1",
+            "layout_row_span": "row-span-1",
+            "layout_col_span": "col-span-1 md:col-span-1"
+          }
+        },
+        "logo_NJMgwh": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/Juicy_Kush_Logo_300x300_4715a38d-9f07-4978-b410-a66c3e903e99.png",
+            "logo_height": 44,
+            "enable_padding": true,
+            "color_scheme": "color__bg-body !color__text",
+            "color_border": "outline--width color__outline-divider-1",
+            "layout_row_span": "row-span-1",
+            "layout_col_span": "col-span-1 md:col-span-1"
+          }
+        },
+        "logo_DYnXiw": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/mit45-brand-logo.jpg",
+            "logo_height": 44,
+            "enable_padding": true,
+            "color_scheme": "color__bg-body !color__text",
+            "color_border": "outline--width color__outline-divider-1",
+            "layout_row_span": "row-span-1",
+            "layout_col_span": "col-span-1 md:col-span-1"
+          }
+        },
+        "logo_EPwKj6": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/mmelt-logo.jpg",
+            "logo_height": 44,
+            "enable_padding": true,
+            "color_scheme": "color__bg-body !color__text",
+            "color_border": "outline--width color__outline-divider-1",
+            "layout_row_span": "row-span-1",
+            "layout_col_span": "col-span-1 md:col-span-1"
+          }
+        },
+        "logo_aWYeUA": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/cali-extrax-brand-logo-alt.webp",
+            "logo_height": 40,
+            "enable_padding": true,
+            "color_scheme": "color__bg-body !color__text",
+            "color_border": "outline--width color__outline-divider-1",
+            "layout_row_span": "row-span-1",
+            "layout_col_span": "col-span-1 md:col-span-1"
+          }
+        },
+        "logo_hfiHLG": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/Tik-Tonics-Logo.jpg",
+            "logo_height": 44,
+            "enable_padding": true,
+            "color_scheme": "color__bg-body !color__text",
+            "color_border": "outline--width color__outline-divider-1",
+            "layout_row_span": "row-span-1",
+            "layout_col_span": "col-span-1 md:col-span-1"
+          }
+        }
+      },
+      "block_order": [
+        "logo_L9AVkP",
+        "logo_6PAELd",
+        "logo_ey3eRy",
+        "logo_NJMgwh",
+        "logo_DYnXiw",
+        "logo_EPwKj6",
+        "logo_aWYeUA",
+        "logo_hfiHLG"
+      ],
+      "disabled": true,
+      "settings": {
+        "heading": "Brands we trust",
+        "content": "",
+        "button_label": "",
+        "button_url": "",
+        "spacing_top": 30,
+        "spacing_bottom": 30,
+        "color_scheme": "color__bg-body color__text",
+        "color_border": "color__border-divider-1",
+        "color_button": "btn btn--secondary",
+        "style_border": "border--b-width",
+        "layout_row_desktop": 8,
+        "layout_row_mobile": 4,
+        "layout_x_alignment": "justify-between",
+        "enable_margin": false,
+        "enable_split": false,
+        "visibility": ""
+      }
+    },
+    "newsletter_W8NDkA": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "Email sign up",
+        "content": "<p>Subscribe to our mailing list to stay in tune with the trends in the smoke shop industry, our discounts and promotions.</p>",
+        "disclaimer": "<p>By signing up you agree to receive marketing and promotional emails from us. We do not share your email address with anybody.</p>",
+        "success": "<p>Success! You've been subscribed to our newsletter. </p>",
+        "subscribe_label": "Subscribe",
+        "spacing_top": 100,
+        "spacing_bottom": 100,
+        "color_scheme": "color__bg-body color__text",
+        "color_border": "color__border-divider-1",
+        "color_button": "btn",
+        "style_border": "border--b-width",
+        "layout_x_alignment": "justify-between",
+        "enable_margin": false,
+        "enable_split": true,
+        "visibility": ""
+      }
+    },
+    "accordions_EdED3B": {
+      "type": "accordions",
+      "blocks": {
+        "content_hqXGex": {
+          "type": "content",
+          "settings": {
+            "heading": "Why can't I pay online?",
+            "content": "<p>Currently, we have not integrated payment service into our online store. Please select Cash On Delivery (COD) as the payment method. We will send you an email with payment link once we receive your order.</p>",
+            "icon": "info",
+            "color_scheme": "minimal",
+            "enable_open": true
+          }
+        },
+        "content_DH6TnW": {
+          "type": "content",
+          "settings": {
+            "heading": "About shipping?",
+            "content": "<p>We provide two methods of delivering products to your location.</p><p>1) <strong>In Store Delivery</strong>: For customers within 50 miles radius with minimum order of $500.00 for a fee of $20.00</p><p>2) <strong>Nation Wide Shipping</strong>: For customers beyond 50 miles. **Please select <strong>Pick Up </strong>as the delivery option. We will still ship it.**</p><p>The Nation Wide shipping rates depend on the size of the order and is only calculated during the shipping phase. The shipping fees in the checkout section is just an estimation. The charge will be included in your final invoice.</p>",
+            "icon": "info",
+            "color_scheme": "minimal",
+            "enable_open": false
+          }
+        },
+        "content_yANWbb": {
+          "type": "content",
+          "settings": {
+            "heading": "How am I notified about my order?",
+            "content": "<p>You will receive an email notification from 545614@us.erply.io regarding your order status, whether it’s ready to be shipped or is ready for pick up.</p>",
+            "icon": "info",
+            "color_scheme": "minimal",
+            "enable_open": false
+          }
+        },
+        "content_Me8dbL": {
+          "type": "content",
+          "settings": {
+            "heading": "What's your return policy?",
+            "content": "<p>you can learn more about our return policy here</p><p><br/>https://united-wholesale.com/policies/refund-policy</p>",
+            "icon": "info",
+            "color_scheme": "minimal",
+            "enable_open": false
+          }
+        },
+        "content_FBmLYe": {
+          "type": "content",
+          "settings": {
+            "heading": "Have any more questions?",
+            "content": "<p>If you have any other questions, please feel free to contact us.</p><p><br/>Phone: +1-817-744-7989<br/>Email: contact@united-wholesale.com</p>",
+            "icon": "info",
+            "color_scheme": "minimal",
+            "enable_open": false
+          }
+        }
+      },
+      "block_order": [
+        "content_hqXGex",
+        "content_DH6TnW",
+        "content_yANWbb",
+        "content_Me8dbL",
+        "content_FBmLYe"
+      ],
+      "settings": {
+        "heading": "Faqs",
+        "content": "<p>Have any questions? They may be answered here.</p>",
+        "button_label": "",
+        "button_url": "",
+        "spacing_top": 100,
+        "spacing_bottom": 0,
+        "color_scheme": "color__bg-body color__text",
+        "color_border": "color__border-divider-1",
+        "color_button": "btn btn--secondary",
+        "heading_font": "type__body type--base",
+        "style_border": "border--b-width",
+        "layout_x_alignment": "justify-between",
+        "enable_margin": false,
+        "enable_split": false,
+        "visibility": ""
+      }
+    },
+    "liquid_6ttdkP": {
+      "type": "liquid",
+      "settings": {
+        "liquid": "<div style=\"display:flex;align-items:center;justify-content:center;flex-direction:column;\">\n<div style=\"margin: 1em 0\">\n<h1>Find Us On Google Maps</h1>\n</div>\n<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3354.2446417720703!2d-97.26917642428698!3d32.78577197366004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864e7765d6767301%3A0xaba8fddcd2c1cb0!2sUnited%20Wholesale%20-%20Smoke%20Shop%20Wholesale!5e0!3m2!1sen!2sus!4v1743620257732!5m2!1sen!2sus\" width=\"100%\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>\n</div>",
+        "spacing_top": 0,
+        "spacing_bottom": 50,
+        "color_scheme": "color__bg-body color__text",
+        "color_border": "color__border-divider-1",
+        "style_border": "",
+        "enable_margin": false,
+        "visibility": ""
+      }
+    },
+    "featured_product_4KCPmy": {
+      "type": "featured-product",
+      "blocks": {
+        "title_z4Ybhk": {
+          "type": "title",
+          "settings": {
+            "content": "",
+            "spacing_top": 20,
+            "spacing_bottom": 10,
+            "color_scheme": "color__bg-transparent",
+            "color_border": "color__border-divider-1",
+            "style_border": "",
+            "position": "right",
+            "savings_badge": "none",
+            "enable_badges": true,
+            "enable_type": false,
+            "enable_vendor": false,
+            "enable_sku": false
+          }
+        },
+        "price_HKNBMH": {
+          "type": "price",
+          "settings": {
+            "spacing_top": 10,
+            "spacing_bottom": 20,
+            "color_scheme": "color__bg-transparent",
+            "color_border": "color__border-divider-1",
+            "style_border": "border--b-width",
+            "position": "right"
+          }
+        },
+        "description_WVXUbr": {
+          "type": "description",
+          "settings": {
+            "spacing_top": 20,
+            "spacing_bottom": 20,
+            "color_scheme": "btn--plain",
+            "color_border": "color__border-divider-1",
+            "style_border": "",
+            "position": "right",
+            "layout_x_alignment": "left",
+            "enable_accordion": false,
+            "enable_open": false
+          }
+        },
+        "table_LNambp": {
+          "type": "table",
+          "settings": {
+            "spacing_top": 10,
+            "spacing_bottom": 10,
+            "color_border": "color__border-divider-1",
+            "style_border": "",
+            "enable_default_rows": true
+          }
+        },
+        "options_TzWVgk": {
+          "type": "options",
+          "settings": {
+            "spacing_top": 20,
+            "spacing_bottom": 0,
+            "color_scheme": "color__bg-transparent",
+            "color_border": "color__border-divider-1",
+            "style_border": "",
+            "position": "right"
+          }
+        },
+        "add_tJV9Pa": {
+          "type": "add",
+          "settings": {
+            "content": "<p>Remind customers of offers like free shipping and lifetime warranty</p>",
+            "spacing_top": 20,
+            "spacing_bottom": 20,
+            "color_scheme": "color__bg-transparent",
+            "color_border": "color__border-divider-1",
+            "color_button": "btn",
+            "style_border": "",
+            "position": "right",
+            "enable_quantity": true,
+            "enable_dynamic_checkout": false,
+            "enable_gift_card_recipient": false
+          }
+        }
+      },
+      "block_order": [
+        "title_z4Ybhk",
+        "price_HKNBMH",
+        "description_WVXUbr",
+        "table_LNambp",
+        "options_TzWVgk",
+        "add_tJV9Pa"
+      ],
+      "disabled": true,
+      "name": "t:sections.featured_product.name",
+      "settings": {
+        "product": "",
+        "enable_default_variant": true,
+        "enable_default_plans": true,
+        "enable_default_selling_plan_widget": true,
+        "media_gallery_style": "slider",
+        "media_slider_size_desktop": 70,
+        "media_slider_size_mobile": 80,
+        "image_border": "!color__border-transparent",
+        "media_gallery_position": "left",
+        "enable_alt": true,
+        "enable_variant_images": false,
+        "enable_zoom": true,
+        "zoom_level": "scale-[1.5]",
+        "media_color_scheme": "color__bg-shade-1 color__text",
+        "media_border": "outline--width color__outline-divider-1",
+        "media_ratio": "aspect-[1/1]",
+        "media_object_sizing": "cover",
+        "enable_ratio": true,
+        "spacing_top": 10,
+        "spacing_bottom": 10,
+        "color_scheme": "color__bg-body color__text",
+        "layout_column_width": 40,
+        "enable_media_margin": true,
+        "enable_main_margin": true
+      }
+    }
+  },
+  "order": [
+    "slideshow_e7pRwU",
+    "product_slider_mkmygE",
+    "banner_iJizX6",
+    "navigation_links_RgBPtx",
+    "custom_collection_grid_6ajEEU",
+    "product_slider_gdGpfr",
+    "logo_list_Tqbhcz",
+    "newsletter_W8NDkA",
+    "accordions_EdED3B",
+    "liquid_6ttdkP",
+    "featured_product_4KCPmy"
+  ]
+}

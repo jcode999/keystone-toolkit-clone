@@ -1,0 +1,232 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "theme_announcement": {
+      "type": "theme__announcement",
+      "blocks": {
+        "announcement_AriTNR": {
+          "type": "announcement",
+          "settings": {
+            "content": "<p><strong>NEW CUSTOMERS. </strong>We are strictly B2B wholesaler. All new accounts must submit valid business documentation to view full Catalog</p>"
+          }
+        }
+      },
+      "block_order": [
+        "announcement_AriTNR"
+      ],
+      "custom_css": [],
+      "settings": {
+        "announcement_delay": 5,
+        "color_scheme": "color__bg-secondary color__secondary",
+        "layout_alignment": "center",
+        "enable_margin": true,
+        "visibility": ""
+      }
+    },
+    "marquee_WwU4wR": {
+      "type": "marquee",
+      "blocks": {
+        "heading_83jRVy": {
+          "type": "heading",
+          "settings": {
+            "content": "| No Minimum Order For Pickup Or Shipping |"
+          }
+        },
+        "heading_eGytGk": {
+          "type": "heading",
+          "settings": {
+            "content": "| Only B2B Customers |"
+          }
+        },
+        "heading_cXiPHg": {
+          "type": "heading",
+          "settings": {
+            "content": "| $500 Minimum for Local Delivery |"
+          }
+        },
+        "content_K8GLb7": {
+          "type": "content",
+          "disabled": true,
+          "settings": {
+            "content": "<p>| No Minimum Order |</p>",
+            "layout_x_alignment": "text-center"
+          }
+        },
+        "content_i3a63W": {
+          "type": "content",
+          "disabled": true,
+          "settings": {
+            "content": "<p>| Free Shipping Over $1000 |</p>",
+            "layout_x_alignment": "text-center"
+          }
+        },
+        "content_QFcTT7": {
+          "type": "content",
+          "disabled": true,
+          "settings": {
+            "content": "<p>| Only Business Customers |</p>",
+            "layout_x_alignment": "text-center"
+          }
+        },
+        "button_ckRJFP": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "button_label": "Create an Account",
+            "button_url": "shopify://pages/wholesale-form",
+            "color_button": "btn btn--secondary"
+          }
+        }
+      },
+      "block_order": [
+        "heading_83jRVy",
+        "heading_eGytGk",
+        "heading_cXiPHg",
+        "content_K8GLb7",
+        "content_i3a63W",
+        "content_QFcTT7",
+        "button_ckRJFP"
+      ],
+      "settings": {
+        "spacing_top": 0,
+        "spacing_bottom": 0,
+        "color_scheme": "color__bg-neutral color__neutral",
+        "color_border": "color__border-selected-1",
+        "style_border": "border--b-width",
+        "enable_margin": false,
+        "use_reverse_animation": false,
+        "animation_speed": 100,
+        "visibility": ""
+      }
+    },
+    "theme_header": {
+      "type": "theme__header",
+      "blocks": {
+        "button_XnBygi": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop now",
+            "button_url": "",
+            "color_button": "btn"
+          }
+        },
+        "content_dRwjrY": {
+          "type": "content",
+          "settings": {
+            "menu": "",
+            "heading": "Block heading",
+            "content": "<p>Describe a product, make announcements, or inform customers about a promotion.</p>",
+            "button_label": "Button",
+            "url": "shopify://collections/all",
+            "enable_autoplay": true,
+            "enable_mute_toggle": true,
+            "enable_loop": true,
+            "spacing_minimum_height": 250,
+            "enable_padding": true,
+            "color_scheme": "color__bg-overlay-1 color__text",
+            "color_text": "!color__text",
+            "color_border": "outline--width color__outline-divider-1",
+            "color_button": "btn--small btn--plain !color__text",
+            "enable_gradient": false,
+            "layout_y_alignment": "justify-end",
+            "layout_x_alignment": "left",
+            "text_position": "below"
+          }
+        }
+      },
+      "block_order": [
+        "button_XnBygi",
+        "content_dRwjrY"
+      ],
+      "custom_css": [],
+      "settings": {
+        "dropdown_links": "",
+        "logo_default": "shopify://shop_images/UNITED_WEBSITE_LOGO_BLACK.svg",
+        "logo_desktop_height": 80,
+        "logo_mobile_height": 60,
+        "enable_logo_on_desktop": true,
+        "bar_default_color_scheme": "color__bg-body color__text",
+        "bar_default_color_border": "color__border-divider-1",
+        "bar_button_search_type": "always",
+        "bar_button_cart_type": "icontext",
+        "bar_button_login_type": "icontext",
+        "bar_button_menu_type_desktop": "icon",
+        "bar_button_menu_type_mobile": "icon",
+        "bar_capitilization": "",
+        "bar_font": "type__body",
+        "bar_link_as_button": false,
+        "enable_margin": true,
+        "dropdown_color_scheme": "color__bg-body !color__text",
+        "dropdown_color_border": "color__border-divider-1",
+        "visibility": ""
+      }
+    },
+    "marquee_tjb7wm": {
+      "type": "marquee",
+      "blocks": {
+        "heading_KDXYLj": {
+          "type": "heading",
+          "settings": {
+            "content": "WHOLESALE REGISTRATION"
+          }
+        },
+        "heading_VAwRU7": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "content": "Marquee"
+          }
+        },
+        "heading_GLThTH": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "content": "Marquee"
+          }
+        },
+        "button_nHUekq": {
+          "type": "button",
+          "settings": {
+            "button_label": "Sign up",
+            "button_url": "https://united-wholesale.com/pages/wholesale-form",
+            "color_button": "btn btn--plain"
+          }
+        }
+      },
+      "block_order": [
+        "heading_KDXYLj",
+        "heading_VAwRU7",
+        "heading_GLThTH",
+        "button_nHUekq"
+      ],
+      "name": "t:sections.marquee.name",
+      "settings": {
+        "spacing_top": 0,
+        "spacing_bottom": 0,
+        "color_scheme": "color__bg-body color__text",
+        "color_border": "color__border-divider-1",
+        "style_border": "border--b-width",
+        "enable_margin": false,
+        "use_reverse_animation": true,
+        "animation_speed": 200,
+        "visibility": ""
+      }
+    }
+  },
+  "order": [
+    "theme_announcement",
+    "marquee_WwU4wR",
+    "theme_header",
+    "marquee_tjb7wm"
+  ]
+}
