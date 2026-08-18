@@ -629,4 +629,78 @@ export const products = {
   galleryZoomOut() {
     this["gallery_zoom_" + this.gallery_index] = false;
   },
+
+  filteredVariants() {
+        let variants = [...this.variants]
+
+        // Search
+        if (this.search.trim()) {
+            const search = this.search.trim().toLowerCase()
+
+            variants = variants.filter(variant =>
+                variant.title.toLowerCase().includes(search)
+            )
+        }
+
+        // Sort
+        variants.sort((a, b) => {
+            let aValue
+            let bValue
+
+            switch (this.sortBy) {
+                case 'price':
+                    aValue = a.price
+                    bValue = b.price
+                    break
+
+                case 'availability':
+                    aValue = a.available ? 1 : 0
+                    bValue = b.available ? 1 : 0
+                    break
+
+                case 'title':
+                default:
+                    aValue = a.title.toLowerCase()
+                    bValue = b.title.toLowerCase()
+                    break
+            }
+
+            if (aValue < bValue) {
+                return this.sortDirection === 'asc' ? -1 : 1
+            }
+
+            if (aValue > bValue) {
+                return this.sortDirection === 'asc' ? 1 : -1
+            }
+
+            return 0
+        })
+
+        return variants
+  },
+
+  // placeholder for the root element instance; avoid assigning the HTMLElement constructor
+  $root: null as unknown as HTMLElement,
+  filter() {
+        console.log("filtering with ", this.variant_search_text)
+        const query = this.variant_search_text.toLowerCase().trim()
+        
+        ;(this.$root
+          .querySelectorAll('.js-results > div') as NodeListOf<HTMLElement>)
+          .forEach((row) => {
+                console.log("row title: ", row.dataset.variantTitle)
+                const title = row.dataset.variantTitle?.toLowerCase() ?? ''
+                const sku = row.dataset.variantSku?.toLowerCase() ?? ''
+
+                row.hidden =
+                    !title.includes(query) &&
+                    !sku.includes(query)
+
+                console.log("row hidden: ", row.hidden)
+                row.classList.toggle(
+                    'flex',
+                    !row.hidden
+                )
+            })
+    }
 };
