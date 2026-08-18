@@ -29,11 +29,11 @@ export const products = {
 
     this.options_map = optionsMap;
 
-    if(!enableDefault) {
+    if (!enableDefault) {
       return;
     }
     // If there is an initial variant, we can use it to update the options
-    else if(initialVariant) {
+    else if (initialVariant) {
       this.current_variant = initialVariant;
       // Refesh the options with section rendering API
       this.fetchAndUpdateOptions(sectionId, productHandle, undefined, undefined, this.current_variant, enableDefault, sellingPlanGroupId, sellingPlanId);
@@ -59,17 +59,17 @@ export const products = {
     }
 
     let params = '';
-    
+
     // If initialVariant is provided, use variant id param
     if (initialVariant) {
       const variant = JSON.parse(decodeURIComponent(initialVariant));
       params = `&variant=${variant.id}`;
-    } 
+    }
     // Otherwise, use option_values from options_map
     else if (this.options_map.size) {
       params = `&option_values=${Array.from(this.options_map.values()).join(',')}`;
     }
-    
+
     this.product_loading = true;
     // Call the section rendering api
     fetch(
@@ -95,7 +95,7 @@ export const products = {
           }
         }
 
-        if (selectedVariant !== null) {          
+        if (selectedVariant !== null) {
           if (enableDefault) {
             // Set option variables base on selectedVariant
             this.setVariantOptions(selectedVariant);
@@ -189,10 +189,10 @@ export const products = {
       }
 
       // Update browser URL to match the fetched product URL (without section parameters) only if not quick-add
-      if(sectionId !== 'quick-add') {
+      if (sectionId !== 'quick-add') {
         history.replaceState(null, "", productURL);
       }
-      
+
     } catch (error) {
       console.error(error);
     }
@@ -274,9 +274,9 @@ export const products = {
         let matchingAllocation = selectedVariant.selling_plan_allocations.find(
           (allocation: { selling_plan_group_id: any; selling_plan_id: number; }) =>
             allocation.selling_plan_group_id ===
-              this.current_variant_selling_group_id &&
+            this.current_variant_selling_group_id &&
             allocation.selling_plan_id ===
-              parseInt(this.current_variant_selling_plan_id),
+            parseInt(this.current_variant_selling_plan_id),
         );
 
         // Set values to first plan if matching allocation not found
@@ -444,7 +444,7 @@ export const products = {
     }
   },
 
-    // Refresh pickup availability block
+  // Refresh pickup availability block
   async fetchAndRefreshPickup(variantId: number, productHandle: string) {
     const updatePickupContainer = async (
       containerSelector: string,
@@ -486,7 +486,7 @@ export const products = {
       ".js-pickupDrawer",
       `${window.Shopify.routes.root}products/${productHandle}?section_id=product__pickup-drawer&variant=${variantId}`,
     );
-},
+  },
 
   // Scroll to next gallery item
   galleryScrollNext() {
@@ -631,76 +631,80 @@ export const products = {
   },
 
   filteredVariants() {
-        let variants = [...this.variants]
+    let variants = [...this.variants]
 
-        // Search
-        if (this.search.trim()) {
-            const search = this.search.trim().toLowerCase()
+    // Search
+    if (this.search.trim()) {
+      const search = this.search.trim().toLowerCase()
 
-            variants = variants.filter(variant =>
-                variant.title.toLowerCase().includes(search)
-            )
-        }
+      variants = variants.filter(variant =>
+        variant.title.toLowerCase().includes(search)
+      )
+    }
 
-        // Sort
-        variants.sort((a, b) => {
-            let aValue
-            let bValue
+    // Sort
+    variants.sort((a, b) => {
+      let aValue
+      let bValue
 
-            switch (this.sortBy) {
-                case 'price':
-                    aValue = a.price
-                    bValue = b.price
-                    break
+      switch (this.sortBy) {
+        case 'price':
+          aValue = a.price
+          bValue = b.price
+          break
 
-                case 'availability':
-                    aValue = a.available ? 1 : 0
-                    bValue = b.available ? 1 : 0
-                    break
+        case 'availability':
+          aValue = a.available ? 1 : 0
+          bValue = b.available ? 1 : 0
+          break
 
-                case 'title':
-                default:
-                    aValue = a.title.toLowerCase()
-                    bValue = b.title.toLowerCase()
-                    break
-            }
+        case 'title':
+        default:
+          aValue = a.title.toLowerCase()
+          bValue = b.title.toLowerCase()
+          break
+      }
 
-            if (aValue < bValue) {
-                return this.sortDirection === 'asc' ? -1 : 1
-            }
+      if (aValue < bValue) {
+        return this.sortDirection === 'asc' ? -1 : 1
+      }
 
-            if (aValue > bValue) {
-                return this.sortDirection === 'asc' ? 1 : -1
-            }
+      if (aValue > bValue) {
+        return this.sortDirection === 'asc' ? 1 : -1
+      }
 
-            return 0
-        })
+      return 0
+    })
 
-        return variants
+    return variants
   },
 
   // placeholder for the root element instance; avoid assigning the HTMLElement constructor
-  $root: null as unknown as HTMLElement,
-  filter() {
-        console.log("filtering with ", this.variant_search_text)
-        const query = this.variant_search_text.toLowerCase().trim()
-        
-        ;(this.$root
-          .querySelectorAll('.js-results > div') as NodeListOf<HTMLElement>)
-          .forEach((row) => {
-                console.log("row title: ", row.dataset.variantTitle)
-                const title = row.dataset.variantTitle?.toLowerCase() ?? ''
-                const sku = row.dataset.variantSku?.toLowerCase() ?? ''
+  // $root: null as unknown as HTMLElement,
+  filter(filter_text: string, root:HTMLElement) {
+    console.log('filter text:', filter_text)
 
-                row.hidden =
-                    !title.includes(query) &&
-                    !sku.includes(query)
+    const query = filter_text.toLowerCase().trim()
+    console.log(this.root);
+    const rows = this.$root.querySelectorAll(
+      '.js-results > div, [class*="js-pagination-landing-"] > div'
+    ) as NodeListOf<HTMLElement>
 
-                console.log("row hidden: ", row.hidden)
-                row.classList.toggle(
-                    'flex',
-                    !row.hidden
-                )
-            })
-    }
+    rows.forEach((row) => {
+      console.log('row title:', row.dataset.variantTitle)
+
+      const title = row.dataset.variantTitle?.toLowerCase() ?? ''
+      const sku = row.dataset.variantSku?.toLowerCase() ?? ''
+
+      const matches =
+        title.includes(query) ||
+        sku.includes(query)
+
+      row.hidden = !matches
+
+      row.classList.toggle('flex', matches)
+
+      console.log('row hidden:', row.hidden)
+    })
+  }
 };
