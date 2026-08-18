@@ -58,6 +58,7 @@ export const globals = {
 
   // Product
   recent_products: app.recent_products,                    // {array} Recently viewed products
+  variant_search_text: app.variant_search_text,            // {string} Filter out product variants
 
   // Discount properties
   discount_text: app.discount_text,                        // {string} Text for the discount
