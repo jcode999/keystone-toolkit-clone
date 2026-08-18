@@ -69,6 +69,7 @@ export interface AppInterface {
   price_format_without_currency: string;
   enable_zeros: boolean;
   enable_currency: boolean;
+  variant_search_text: string;
 }
 
 export interface ShopifyInterface {
