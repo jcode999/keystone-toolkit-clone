@@ -166,12 +166,13 @@
   <div class='w-full flex tems-center p-2'>
 			<input
 				type='text'
-				x-model='variant_search_text'
+				x-model='filter_text'
 				placeholder='Search variants...'
 				class='border rounded h-auto text-sm p-0'
         @input="
         expanded = true
-        filter()"
+        filter(filter_text,this.root)
+        "
 			>
 
 			{% comment %} <select
@@ -247,7 +248,7 @@
     {% comment %} Variants {% endcomment %}
     {% render 'component__variant-table-pagination', 
       product: product,
-      enable_default_rows: enable_default_rows
+      enable_default_rows: true
     %}
 
     {% comment %} Total {% endcomment %}
@@ -278,13 +279,16 @@
     x-data="{ 
       button_loading: false,
       expanded: false,
+      filter_text:'',
+      
       // Computed properties for performance optimization
       get cartVariantIds() {
         return new Set((cart.items || []).map(item => item.variant_id));
       },
       get productCartSummary() {
         return cart.summary ? cart.summary[{{ product.id }}] : null;
-      }
+      },
+
     }">
     <div class="border--t-width color__border-divider-1 relative z-10 flex items-start gap-2 md:gap-4">
 
