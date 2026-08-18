@@ -162,6 +162,39 @@
   {% endif %}
 {% endcapture %}
 
+{% capture table_options %}
+  <div class='w-full flex tems-center p-2'>
+			<input
+				type='text'
+				x-model='variant_search_text'
+				placeholder='Search variants...'
+				class='border rounded h-auto text-sm p-0'
+        @input="
+        expanded = true
+        filter()"
+			>
+
+			{% comment %} <select
+				x-model='sortBy'
+				class='border rounded px-3 py-2'
+			>
+				<option value='title'>Title</option>
+				<option value='price'>Price</option>
+				<option value='availability'>Availability</option>
+			</select>
+
+			<button
+				type='button'
+				@click='toggleSortDirection()'
+				class='border rounded px-3 py-2'
+				:aria-label="sortDirection === 'asc' ? 'Sort descending' : 'Sort ascending'"
+			>
+				<span x-text="sortDirection === 'asc' ? '↑' : '↓'"></span>
+			</button> {% endcomment %}
+		</div>
+
+{% endcapture %}
+
 {% capture product_add %}
   {% unless show_table %}
     <div class="">
@@ -390,6 +423,8 @@
                     {{ 'actions.see_details' | t }}
                   </a>
                 {% endif %}
+                {{ table_options }}
+                
               </div>
 
             </div>
