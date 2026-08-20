@@ -1,6 +1,7 @@
 import { Shopify } from "../shopify/shopify";
 
 export const products = {
+  variantQuantities: {} as Record<number, number>,
   // Update page when variant selection changes
   handleProductFormChange(
     initialVariant: string | null,
@@ -679,9 +680,8 @@ export const products = {
     return variants
   },
 
-  // placeholder for the root element instance; avoid assigning the HTMLElement constructor
-  // $root: null as unknown as HTMLElement,
-  filter(filter_text: string, root:HTMLElement) {
+
+  filter(filter_text: string, root: HTMLElement) {
     console.log('filter text:', filter_text)
 
     const query = filter_text.toLowerCase().trim()
@@ -706,5 +706,71 @@ export const products = {
 
       console.log('row hidden:', row.hidden)
     })
-  }
+  },
+
+  get cartVariants() {
+    return Object.entries(this.variantQuantities)
+      .filter(([_, quantity]) => Number(quantity) > 0)
+      .map(([id, quantity]) => ({
+        variantId: Number(id),
+        quantity: Number(quantity)
+      }))
+  },
+
+  incrementVariantQty(variantId: number, step: number = 1) {
+    console.log("increasing quantity for variant id: ", variantId)
+    const current = this.variantQuantities[variantId] || 0;
+    this.variantQuantities[variantId] = current + step;
+    console.log("quantities after add", this.variantQuantities)
+  },
+
+  decrementVariantQty(variantId: number, step: number = 1) {
+    const current = this.variantQuantities[variantId] || 0;
+    const next = current - step;
+
+    if (next <= 0) {
+      delete this.variantQuantities[variantId];
+    } else {
+      this.variantQuantities[variantId] = next;
+    }
+  },
+  
+  async addBulkToCart() {
+    //separate change and update
+    const itemsInCart : {
+      variantId:number,
+      quantity:number
+    }[] = [];
+    const itemsToAdd :{
+      variantId:number,
+      quantity:number
+    }[] = [];
+
+    const cart = this.cart.variantMap
+    Object.entries(this.variantQuantities).forEach(([id, quantity]) => {
+      if (cart[id]) {
+        if (cart[id].quantity !== quantity) {
+          itemsInCart.push(
+            {
+              variantId:Number(id),
+              quantity:Number(quantity),
+            }
+          );
+        }
+      } else {
+        itemsToAdd.push(
+          {
+              variantId:Number(id),
+              quantity:Number(quantity),
+          }
+        );
+      }
+    });
+
+    await this.changeCartQuantities(itemsInCart)
+    await this.addCartItems(itemsToAdd)
+    
+    // this.openCart();
+    //this.variantQuantities = {}; // reset after successful add
+  },
 };
