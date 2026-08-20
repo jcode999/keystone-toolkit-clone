@@ -27,11 +27,11 @@
   - Use this snippet within a product page or cart page to allow users to adjust the quantity of a specific variant.
 {% endcomment %}
 
-{% if is_overlay == true %}
+{% comment %} {% if is_overlay == true %}
   {% assign open_cart = false %}
 {% else %}
   {% assign open_cart = true %}
-{% endif %}
+{% endif %} {% endcomment %}
 
 {% assign quantity_break_array = variant.quantity_price_breaks | sort: 'quantity' %}
 {% capture quantity_break_content %}
@@ -179,7 +179,7 @@
       <span class="hidden flex-col items-end md:flex">
         <span class="type--smaller opacity-75"> {{ 'labels.total' | t }}: </span>
         <span
-          x-html="cartItem ? Shopify.formatMoney(cartItem.line_price) : Shopify.formatMoney(0)"
+          x-html="Shopify.formatMoney(({{ variant.price  }}) * quantity)"
         ></span>
       </span>
     {% endif %}
@@ -275,9 +275,11 @@
       {% endif %}
     </div>
     {% if show_totals %}
-      <span class="hidden flex-col items-end  md:flex">
+      <span class="hidden flex-col items-end md:flex">
         <span class="type--smaller opacity-75"> {{ 'labels.total' | t }}: </span>
-        <span>{% render 'component__format-price', price: 0 %}</span>
+        <span
+          x-html="Shopify.formatMoney(({{ variant.price  }}) * quantity)"
+        ></span>
       </span>
     {% endif %}
   </div>
