@@ -293,12 +293,14 @@ const cart = {
   },
   // Call change.js to update cart item then use updateCart()
   async changeCartItemQuantity(key, quantity, openCart, refresh) {
+    console.log("changing cart items.");
     this.playAudioIfEnabled(this.click_audio);
     this.cart_loading = true;
     let formData = {
       id: key.toString(),
       quantity: quantity.toString()
     };
+    console.log("change: ", formData);
     try {
       const response = await fetch(
         `${window.Shopify.routes.root}cart/change.js`,
@@ -342,6 +344,19 @@ const cart = {
       this.debounceTimeouts.delete(target);
     }, 400);
     this.debounceTimeouts.set(target, timeout);
+  },
+  async changeCartQuantities(items) {
+    this.cart_loading = true;
+    for (const item of items) {
+      console.log("changing item: ", item);
+      await this.changeCartItemQuantity(
+        item.variantId,
+        item.quantity,
+        false,
+        false
+      );
+    }
+    this.cart_loading = false;
   },
   // Call add.js to add cart item then use updateCart()
   async addCartItem(variantID, sellingPlanId, quantity, openCart, enableAudio = true) {
@@ -820,6 +835,7 @@ function formatMoney(cents, forceEnableCurrency) {
 }
 Shopify.formatMoney = formatMoney;
 const products = {
+  variantQuantities: {},
   // Update page when variant selection changes
   handleProductFormChange(initialVariant, sectionId, productHandle, optionPosition, optionValueId, sellingPlanGroupId = 0, sellingPlanId = 0, enableDefault = true) {
     var _a;
@@ -1272,8 +1288,6 @@ const products = {
     });
     return variants;
   },
-  // placeholder for the root element instance; avoid assigning the HTMLElement constructor
-  // $root: null as unknown as HTMLElement,
   filter(filter_text, root) {
     console.log("filter text:", filter_text);
     const query = filter_text.toLowerCase().trim();
@@ -1291,6 +1305,53 @@ const products = {
       row.classList.toggle("flex", matches2);
       console.log("row hidden:", row.hidden);
     });
+  },
+  get cartVariants() {
+    return Object.entries(this.variantQuantities).filter(([_, quantity]) => Number(quantity) > 0).map(([id, quantity]) => ({
+      variantId: Number(id),
+      quantity: Number(quantity)
+    }));
+  },
+  incrementVariantQty(variantId, step = 1) {
+    console.log("increasing quantity for variant id: ", variantId);
+    const current = this.variantQuantities[variantId] || 0;
+    this.variantQuantities[variantId] = current + step;
+    console.log("quantities after add", this.variantQuantities);
+  },
+  decrementVariantQty(variantId, step = 1) {
+    const current = this.variantQuantities[variantId] || 0;
+    const next = current - step;
+    if (next <= 0) {
+      delete this.variantQuantities[variantId];
+    } else {
+      this.variantQuantities[variantId] = next;
+    }
+  },
+  async addBulkToCart() {
+    const itemsInCart = [];
+    const itemsToAdd = [];
+    const cart2 = this.cart.variantMap;
+    Object.entries(this.variantQuantities).forEach(([id, quantity]) => {
+      if (cart2[id]) {
+        if (cart2[id].quantity !== quantity) {
+          itemsInCart.push(
+            {
+              variantId: Number(id),
+              quantity: Number(quantity)
+            }
+          );
+        }
+      } else {
+        itemsToAdd.push(
+          {
+            variantId: Number(id),
+            quantity: Number(quantity)
+          }
+        );
+      }
+    });
+    await this.changeCartQuantities(itemsInCart);
+    await this.addCartItems(itemsToAdd);
   }
 };
 const collections = {
