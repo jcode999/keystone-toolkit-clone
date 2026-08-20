@@ -548,7 +548,7 @@
 
       {% comment %} Adjust quantity {% endcomment %}
       {% for variant in product.variants %}
-        {% render 'component__variant-increment',
+        {% render 'component__variant-increment-custom',
           variant: variant
         %}
       {% endfor %}

@@ -203,7 +203,7 @@
 
         {% comment %} Adjust quantity {% endcomment %}
         {% for variant in product.variants %}
-          {% render 'component__variant-increment',
+          {% render 'component__variant-increment-custom',
             variant: variant,
             container_class: 'gap-4 md:gap-10 md:max-w-[300px]',
             input_class: 'max-w-[150px]',
@@ -603,6 +603,13 @@
             {% if is_approved_customer == true %}
               {{ product_price }}
               {{ product_add }}
+              <button 
+                  class="btn"
+                @click.prevent="
+                addBulkToCart()
+                openCart()
+                "
+              >Add to cart</button>
             {% else %}
               {% unless product.tags contains settings.account_hide_price_tag %}
                 {{ product_price }}
@@ -615,7 +622,7 @@
         
         {% comment %} Variants {% endcomment %}
         <div 
-          class="flex w-full flex-col"
+          class="flex w-full flex-col mr-4"
           :class="{
             'opacity-25' : pagination_loading
           }">
@@ -697,7 +704,7 @@
     </div>
   {% endif %}
 {% endcapture %}
-
+<div >
 {% if is_approved_customer == true %}
   {{ product_item }}
 {% else %}
@@ -707,3 +714,4 @@
     {{ product_item }}
   {% endif %}
 {% endif %}
+</div>
