@@ -1,0 +1,284 @@
+<!-- snippets/component__variant-increment.liquid -->
+{% comment %}
+  This renders a quantity picker to adjust the quantity of a variant in the cart.
+
+  Accepts:
+  - variant: {Object} Liquid object for variant values.
+  - show_totals: {boolean} Shows the total price of the variant if set to true.
+  - parent_class: {string} Additional classes to apply to the parentcontainer.
+  - container_class: {string} Additional classes to apply to the container.
+  - input_class: {string} Additional classes to apply to the input.
+  - is_overlay: {boolean} If in overlay drawer will not open when cart changes.
+
+  Globals:
+  - settings: No global settings variables are used in this file.
+
+  Usage:
+    {% render 'component__variant-increment',
+      variant: variant,
+      show_totals: true,
+      parent_class: 'w-full',
+      container_class: 'gap-4 md:gap-10 md:max-w-[300px]',
+      input_class: 'max-w-[128px]',
+      is_overlay: false
+    %}
+
+  Recommendations:
+  - Use this snippet within a product page or cart page to allow users to adjust the quantity of a specific variant.
+{% endcomment %}
+
+{% if is_overlay == true %}
+  {% assign open_cart = false %}
+{% else %}
+  {% assign open_cart = true %}
+{% endif %}
+
+{% assign quantity_break_array = variant.quantity_price_breaks | sort: 'quantity' %}
+{% capture quantity_break_content %}
+  <div class="flex flex-col">
+    {% if customer.b2b? %}
+      <span class="type--smaller border--b-width color__border-divider-1 flex flex-col pb-1 opacity-75">
+        <span class="type--smaller">
+          {{ 'labels.min' | t }} {{ variant.quantity_rule.min }} • {{ 'labels.max' | t }} {{ variant.quantity_rule.max }}
+        </span>
+        <span class="type--smaller">
+          {{ 'labels.increments_of' | t }} {{ variant.quantity_rule.increment }}
+        </span>
+      </span>
+    {% endif %}
+    {%- for price_break in quantity_break_array -%}
+      <div 
+        class="
+          type--smaller flex justify-between gap-2 py-1 
+          {% unless forloop.last %}border--b-width color__border-divider-1{% endunless %}
+        ">
+        <span>
+          {{ price_break.minimum_quantity }}+
+        </span>
+        <span>
+          {% render 'component__format-price', price: price_break.price %}/{{ 'labels.each' | t | downcase }}
+        </span>
+      </div>
+    {%- endfor -%}
+  </div>
+{% endcapture %}
+
+<div
+  class="{{ parent_class }}"
+  x-data="
+    {
+
+      button_loading: false,
+      variantId: {{ variant.id }},
+      get quantity() {
+        return this.variantQuantities[this.variantId] || '';
+      },
+      set quantity(value) {
+        const num = Number(value);
+        if (num > 0) {
+          this.variantQuantities[this.variantId] = num;
+        } else {
+          delete this.variantQuantities[this.variantId];
+        }
+      },
+
+      // Computed property to check if item is in cart
+      get isInCart() {
+        return !!this.cartItem;
+      },
+      get cartItem() {
+          return (cart.variantMap && cart.variantMap[this.variantId]) || null;
+        },
+
+      init() {
+
+        this.updateQuantity();
+        // Only watch the specific variant's quantity, not the entire cart
+        this.$watch('cartItem?.quantity', () => {
+          this.updateQuantity();
+        });
+      },
+
+      updateQuantity() {
+        this.quantity = this.cartItem ? this.cartItem.quantity : '';
+      }
+    }
+  "
+  x-init="init()"
+>
+  {% comment %} Template - when item is in cart {% endcomment %}
+  <div
+    class="flex w-full items-center justify-between {{ container_class }}"
+    x-show="isInCart"
+    x-cloak
+  >
+    <div class="group relative w-full">
+      <label
+        class="sr-only"
+        for="{{ section.id }}-{{ variant.id }}-quantity"
+      >
+        {{ 'labels.quantity' | t }}
+      </label>
+      <div
+        class="border__input--radius border__input color__border-input hover:border__input--hover focus-within:border__input--focus relative flex overflow-hidden {{ input_class }}"
+      >
+        <input
+          id="{{ section.id }}-{{ variant.id }}-quantity"
+          class="!rounded-none !border-0 text-center"
+          type="number"
+          placeholder="0"
+          min="1"
+          x-model="quantity"
+        >
+        <div
+          class="invisible absolute left-0 top-0 h-0.5 w-full overflow-hidden"
+          :class="{ '!visible !z-10' : button_loading && cart_loading }"
+        >
+          <div class="color__bg-shade-2">
+            <div
+              class="color__bg-text h-0.5 w-0"
+              :class="{ 'animate-widthexpand': button_loading && cart_loading }"
+            ></div>
+          </div>
+        </div>
+        <div class="color__bg-input color__input border--r-width color__border-divider-1 absolute left-0 flex h-full flex-col justify-center gap-0">
+          <button
+            class="btn btn--smaller btn--plain !h-full shrink-0 !rounded-none !border-0 !px-2"
+            title="{{ 'actions.decrease_item_quantity' | t }}"
+            type="button"
+            tabindex="-1"
+            @click.prevent="decrementVariantQty({{ variant.id }})"
+          >
+            {% render 'component__icon', icon: 'minus', size: '14', class: '' %}
+          </button>
+        </div>
+        <div class="color__bg-input color__input border--l-width color__border-divider-1 absolute right-0 flex h-full flex-col justify-center gap-0">
+          <button
+            class="btn btn--smaller btn--plain !h-full shrink-0 !rounded-none !border-0 !px-2"
+            title="{{ 'actions.increase_item_quantity' | t }}"
+            type="button"
+            tabindex="-1"
+            :disabled="button_loading || quantity >= {{ variant.inventory_quantity }} && '{{ variant.inventory_policy }}' == 'deny' && '{{ variant.inventory_management }}' != ''"
+            @click.prevent="incrementVariantQty({{ variant.id }})"
+          >
+            {% render 'component__icon', icon: 'plus', size: '14', class: '' %}
+          </button>
+        </div>
+      </div>
+      {% if variant.quantity_price_breaks.size > 0 %}
+        {% render 'component__tooltip',
+          content: quantity_break_content,
+          background: 'text',
+          text: 'light',
+          tip: 'left',
+          container_class: 'mt-4'
+        %}
+      {% endif %}
+    </div>
+    {% if show_totals %}
+      <span class="hidden flex-col items-end md:flex">
+        <span class="type--smaller opacity-75"> {{ 'labels.total' | t }}: </span>
+        <span
+          x-html="cartItem ? Shopify.formatMoney(cartItem.line_price) : Shopify.formatMoney(0)"
+        ></span>
+      </span>
+    {% endif %}
+  </div>
+
+  {% comment %} Template - when item is not in cart {% endcomment %}
+  <div
+    class="flex w-full items-center justify-between {{ container_class }}"
+    x-show="!isInCart"
+  >
+    <div class="group relative w-full">
+      <label
+        class="sr-only"
+        for="{{ section.id }}-{{ variant.id }}-quantity-new"
+      >
+        {{ 'labels.quantity' | t }}
+      </label>
+      <div
+        class="border__input--radius border__input color__border-input hover:border__input--hover focus-within:border__input--focus relative flex overflow-hidden {{ input_class }}"
+      >
+        <input
+          id="{{ section.id }}-{{ variant.id }}-quantity-new"
+          class="
+            !rounded-none !border-0 text-center
+            {% unless variant.available %}
+              cursor-not-allowed
+            {% endunless %}
+          "
+          type="number"
+          placeholder="0"
+          min="1"
+          x-model="quantity"
+          {% unless variant.available %}
+            disabled
+          {% endunless %}
+        >
+        <div
+          class="invisible absolute left-0 top-0 h-0.5 w-full overflow-hidden"
+          :class="{ '!visible !z-10' : button_loading && cart_loading }"
+        >
+          <div class="color__bg-shade-2">
+            <div
+              class="color__bg-text h-0.5 w-0"
+              :class="{ 'animate-widthexpand': button_loading && cart_loading }"
+            ></div>
+          </div>
+        </div>
+        <div class="color__bg-input color__input border--r-width color__border-divider-1 absolute left-0 flex h-full flex-col justify-center gap-0">
+          <button
+            class="
+              btn btn--smaller btn--plain !h-full shrink-0 !rounded-none !border-0 !px-2
+              {% unless variant.available %}
+                !cursor-not-allowed
+              {% endunless %}
+            "
+            title="{{ 'actions.decrease_item_quantity' | t }}"
+            type="button"
+            {% comment %} disabled {% endcomment %}
+            tabindex="-1"
+            @click.prevent="decrementVariantQty({{ variant.id }})"
+          >
+            {% render 'component__icon', icon: 'minus', size: '14', class: '' %}
+          </button>
+        </div>
+        <div class="color__bg-input color__input border--l-width color__border-divider-1 absolute right-0 flex h-full flex-col justify-center gap-0">
+          <button
+            class="
+              btn btn--smaller btn--plain !h-full shrink-0 !rounded-none !border-0 !px-2
+              {% unless variant.available %}
+                !cursor-not-allowed
+              {% endunless %}
+            "
+            title="{{ 'actions.increase_item_quantity' | t }}"
+            type="button"
+            {% unless variant.available %}
+              disabled
+            {% endunless %}
+            tabindex="-1"
+            @click.prevent="incrementVariantQty({{ variant.id }})"
+          >
+            {% render 'component__icon', icon: 'plus', size: '14', class: '' %}
+          </button>
+        </div>
+      </div>
+      {% if variant.quantity_price_breaks.size > 0 %}
+        {% render 'component__tooltip',
+          content: quantity_break_content,
+          background: 'text',
+          text: 'light',
+          tip: 'left',
+          container_class: 'mt-4'
+        %}
+      {% endif %}
+    </div>
+    {% if show_totals %}
+      <span class="hidden flex-col items-end md:flex">
+        <span class="type--smaller opacity-75"> {{ 'labels.total' | t }}: </span>
+        <span>{% render 'component__format-price', price: 0 %}</span>
+      </span>
+    {% endif %}
+  </div>
+</div>
