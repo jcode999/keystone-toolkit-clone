@@ -202,6 +202,7 @@ export const cart = {
     openCart: boolean,
     refresh: boolean,
   ) {
+    console.log("changing cart items.")
     // Play audio
     this.playAudioIfEnabled(this.click_audio);
 
@@ -213,6 +214,8 @@ export const cart = {
       id: key.toString(),
       quantity: quantity.toString(),
     };
+
+    console.log("change: ",formData)
 
     // Get data from shopify
     try {
@@ -283,6 +286,22 @@ export const cart = {
 
     // Store the timeout for the target
     this.debounceTimeouts.set(target, timeout);
+  },
+
+  async changeCartQuantities(items:CartItem[]){
+    this.cart_loading = true;
+    
+    for (const item of items) {
+      console.log("changing item: ", item)
+      await this.changeCartItemQuantity(
+        item.variantId,
+        item.quantity,
+        false,
+        false,
+      )
+    }
+    this.cart_loading = false;
+    
   },
 
   // Call add.js to add cart item then use updateCart()
