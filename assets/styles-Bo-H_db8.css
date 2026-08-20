@@ -1848,6 +1848,9 @@ img:after {
 .max-w-\[150px\] {
   max-width: 150px;
 }
+.max-w-\[220px\] {
+  max-width: 220px;
+}
 .max-w-\[250px\] {
   max-width: 250px;
 }
@@ -1862,6 +1865,9 @@ img:after {
 }
 .max-w-\[70\%\] {
   max-width: 70%;
+}
+.max-w-\[90\%\] {
+  max-width: 90%;
 }
 .max-w-full {
   max-width: 100%;
