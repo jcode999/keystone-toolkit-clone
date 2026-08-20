@@ -205,7 +205,7 @@
         {% for variant in product.variants %}
           {% render 'component__variant-increment-custom',
             variant: variant,
-            container_class: 'gap-4 md:gap-10 md:max-w-[300px]',
+            container_class: 'md:max-w-[300px]',
             input_class: 'max-w-[150px]',
             is_overlay: is_overlay
           %}
@@ -704,7 +704,7 @@
     </div>
   {% endif %}
 {% endcapture %}
-<div >
+<div class="max-w-[90%]">
 {% if is_approved_customer == true %}
   {{ product_item }}
 {% else %}

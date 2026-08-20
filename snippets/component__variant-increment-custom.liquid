@@ -108,11 +108,11 @@
 >
   {% comment %} Template - when item is in cart {% endcomment %}
   <div
-    class="flex w-full items-center justify-between {{ container_class }}"
+    class="flex  items-center justify-between {{ container_class }}"
     x-show="isInCart"
     x-cloak
   >
-    <div class="group relative w-full">
+    <div class="group relative max-w-[220px]">
       <label
         class="sr-only"
         for="{{ section.id }}-{{ variant.id }}-quantity"
@@ -187,10 +187,10 @@
 
   {% comment %} Template - when item is not in cart {% endcomment %}
   <div
-    class="flex w-full items-center justify-between {{ container_class }}"
+    class="flex items-center justify-between  {{ container_class }}"
     x-show="!isInCart"
   >
-    <div class="group relative w-full">
+    <div class="group relative max-w-[220px]">
       <label
         class="sr-only"
         for="{{ section.id }}-{{ variant.id }}-quantity-new"
@@ -275,7 +275,7 @@
       {% endif %}
     </div>
     {% if show_totals %}
-      <span class="hidden flex-col items-end md:flex">
+      <span class="hidden flex-col items-end  md:flex">
         <span class="type--smaller opacity-75"> {{ 'labels.total' | t }}: </span>
         <span>{% render 'component__format-price', price: 0 %}</span>
       </span>
