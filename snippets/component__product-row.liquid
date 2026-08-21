@@ -606,8 +606,7 @@
               <button 
                   class="btn"
                 @click.prevent="
-                addBulkToCart()
-                openCart()
+                await addBulkToCart()
                 "
               >Add to cart</button>
             {% else %}

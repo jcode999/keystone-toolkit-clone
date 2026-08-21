@@ -735,42 +735,5 @@ export const products = {
     }
   },
   
-  async addBulkToCart() {
-    //separate change and update
-    const itemsInCart : {
-      variantId:number,
-      quantity:number
-    }[] = [];
-    const itemsToAdd :{
-      variantId:number,
-      quantity:number
-    }[] = [];
-
-    const cart = this.cart.variantMap
-    Object.entries(this.variantQuantities).forEach(([id, quantity]) => {
-      if (cart[id]) {
-        if (cart[id].quantity !== quantity) {
-          itemsInCart.push(
-            {
-              variantId:Number(id),
-              quantity:Number(quantity),
-            }
-          );
-        }
-      } else {
-        itemsToAdd.push(
-          {
-              variantId:Number(id),
-              quantity:Number(quantity),
-          }
-        );
-      }
-    });
-
-    await this.changeCartQuantities(itemsInCart)
-    await this.addCartItems(itemsToAdd)
-    
-    // this.openCart();
-    //this.variantQuantities = {}; // reset after successful add
-  },
+  
 };

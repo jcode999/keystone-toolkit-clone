@@ -8,7 +8,7 @@ interface CartItem {
 
 export const cart = {
   debounceTimeouts: new Map<HTMLInputElement, NodeJS.Timeout>(),
-  
+
   // Add memoization for cart summary and grouped items
   _lastCartItemsHash: '',
   _memoizedSummary: null as any,
@@ -21,6 +21,7 @@ export const cart = {
 
   // Update cart with fetched data
   async updateCart(openCart: boolean, openAlert: boolean = true) {
+    console.log("updating cart with fresh data, open cart: ",openCart)
     // Reset global properties
     this.cart_loading = true;
     this.enable_body_scrolling = true;
@@ -61,7 +62,7 @@ export const cart = {
         (calcTotal /
           (this.progress_bar_threshold *
             (+window.Shopify.currency.rate || 1))) *
-          100 +
+        100 +
         "%";
 
       // Sort cart (with memoization)
@@ -145,10 +146,10 @@ export const cart = {
   handleUpsells() {
     // Get all cart item product IDs in a Set for O(1) lookup
     const cartProductIds = new Set(this.cart.items.map((item: any) => item.product_id));
-    
+
     // Single DOM query for all upsells
     const allUpsells = document.querySelectorAll(".js-upsell");
-    
+
     // Show all upsells first (batch operation)
     allUpsells.forEach((element) => {
       (element as HTMLElement).style.display = "flex";
@@ -214,8 +215,6 @@ export const cart = {
       id: key.toString(),
       quantity: quantity.toString(),
     };
-
-    console.log("change: ",formData)
 
     // Get data from shopify
     try {
@@ -288,20 +287,35 @@ export const cart = {
     this.debounceTimeouts.set(target, timeout);
   },
 
-  async changeCartQuantities(items:CartItem[]){
-    this.cart_loading = true;
+  async updateCartQuantitiesBulk(items: CartItem[]) {
+    console.log("updating cart quantities.. update.js")
     
-    for (const item of items) {
-      console.log("changing item: ", item)
-      await this.changeCartItemQuantity(
-        item.variantId,
-        item.quantity,
-        false,
-        false,
-      )
-    }
-    this.cart_loading = false;
+    const updates = Object.fromEntries(
+      items.map(item => [item.variantId, item.quantity])
+    );
+    console.log("updates: ", JSON.stringify({ updates }))
+    await fetch(window.Shopify.routes.root + 'cart/update.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ updates })
+    })
+      .then(response => {
+        const res =  response.json()
+        console.log("update cart bulk response", res)
+        return res;
+
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
+
+
+
     
+
   },
 
   // Call add.js to add cart item then use updateCart()
@@ -423,6 +437,57 @@ export const cart = {
     this.playAudioIfEnabled(this.success_audio);
   },
 
+  //add bulk items to cart, single request
+  async addCartItemsBulk(items: CartItem[]) {
+    this.playAudioIfEnabled(this.click_audio);
+    const formData = {
+      "items": items.map((item) => ({
+        'id': item.variantId,
+        'quantity': item.quantity
+      }))
+    }
+    console.log("form data: ", formData)
+    return fetch(`${window.Shopify.routes.root}cart/add.js`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(async (response) => {
+        let data = await response.json();
+
+        // Good response
+        if (response.status === 200) {
+          this.playAudioIfEnabled(this.success_audio);
+          this.updateCart(true);
+          console.log("added to cart successfully..")
+
+        }
+
+        // Error response
+        else {
+          this.error_message = data.description;
+          this.error_alert = true;
+
+          // Update cart to reflect the actual quantities that were added
+          // This ensures the UI shows the correct quantities after a stock limitation error
+          this.updateCart(false, false);
+
+          // Force update of quantity input fields to reflect actual cart quantities
+          setTimeout(() => {
+            this.resetQuantityInputs();
+          }, 200);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        this.cart_loading = false;
+      });
+
+
+  },
+
   // Call add.js to add cart item then use updateCart()
   async editCartItem(
     oldQuantity: number,
@@ -444,14 +509,14 @@ export const cart = {
     let newFormData =
       sellingPlanId == 0
         ? {
-            id: newVariantId.toString(),
-            quantity: oldQuantity.toString(),
-          }
+          id: newVariantId.toString(),
+          quantity: oldQuantity.toString(),
+        }
         : {
-            id: newVariantId.toString(),
-            quantity: oldQuantity.toString(),
-            selling_plan: sellingPlanId.toString(),
-          };
+          id: newVariantId.toString(),
+          quantity: oldQuantity.toString(),
+          selling_plan: sellingPlanId.toString(),
+        };
 
     try {
       // Remove item
@@ -527,7 +592,7 @@ export const cart = {
         obj[name] = value;
         return obj;
       }, {} as Record<string, FormDataEntryValue>);
-      
+
     if (Object.keys(propertiesObj).length > 0) {
       for (const [key, value] of Object.entries(propertiesObj)) {
         formData.append(`properties[${key}]`, value as string);
@@ -610,7 +675,7 @@ export const cart = {
   // Optimized cart sorting with memoization
   sortCartItems() {
     const currentHash = this._generateCartHash(this.cart.items);
-    
+
     // Return cached results if cart hasn't changed
     if (currentHash === this._lastCartItemsHash && this._memoizedSummary && this._memoizedGroupedItems) {
       this.cart.summary = this._memoizedSummary;
@@ -627,7 +692,7 @@ export const cart = {
     for (const item of this.cart.items) {
       const productId = item.product_id;
       const variantId = item.variant_id;
-      
+
       // Build summary
       if (!summary[productId]) {
         summary[productId] = {
@@ -660,7 +725,7 @@ export const cart = {
     this._lastCartItemsHash = currentHash;
     this._memoizedSummary = summary;
     this._memoizedGroupedItems = groupedItems;
-    
+
     // Set cart properties
     this.cart.summary = summary;
     this.cart.groupedItems = groupedItems;
@@ -736,7 +801,7 @@ export const cart = {
       clearTimeout(timeout);
     });
     this.debounceTimeouts.clear();
-    
+
     // Clear memoization cache
     this._lastCartItemsHash = '';
     this._memoizedSummary = null;
@@ -769,5 +834,53 @@ export const cart = {
       }
     });
   },
-  
+
+  async addBulkToCart() {
+    this.cart_loading = true;
+    //separate change and update
+    const itemsInCart: {
+      variantId: number,
+      quantity: number
+    }[] = [];
+    const itemsToAdd: {
+      variantId: number,
+      quantity: number
+    }[] = [];
+
+    const cart = this.cart.variantMap
+    Object.entries(this.variantQuantities).forEach(([id, quantity]) => {
+      if (cart[id]) {
+        if (cart[id].quantity !== quantity) {
+          itemsInCart.push(
+            {
+              variantId: Number(id),
+              quantity: Number(quantity),
+            }
+          );
+        }
+      } else {
+        itemsToAdd.push(
+          {
+            variantId: Number(id),
+            quantity: Number(quantity),
+          }
+        );
+      }
+    });
+
+    if (itemsInCart.length > 0){
+      const res = await this.updateCartQuantitiesBulk(itemsInCart)
+      console.log("updated cart items: ",res)
+    }
+
+    if (itemsToAdd.length > 0)
+      await this.addCartItemsBulk(itemsToAdd)
+
+    this.cart_loading = false;
+    console.log("ready to open cart")
+    this.updateCart(false)
+    this.openCart()
+
+  },
+
 };
