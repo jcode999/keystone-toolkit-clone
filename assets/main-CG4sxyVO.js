@@ -170,6 +170,7 @@ const cart = {
   },
   // Update cart with fetched data
   async updateCart(openCart, openAlert = true) {
+    console.log("updating cart with fresh data, open cart: ", openCart);
     this.cart_loading = true;
     this.enable_body_scrolling = true;
     try {
@@ -300,7 +301,6 @@ const cart = {
       id: key.toString(),
       quantity: quantity.toString()
     };
-    console.log("change: ", formData);
     try {
       const response = await fetch(
         `${window.Shopify.routes.root}cart/change.js`,
@@ -345,18 +345,25 @@ const cart = {
     }, 400);
     this.debounceTimeouts.set(target, timeout);
   },
-  async changeCartQuantities(items) {
-    this.cart_loading = true;
-    for (const item of items) {
-      console.log("changing item: ", item);
-      await this.changeCartItemQuantity(
-        item.variantId,
-        item.quantity,
-        false,
-        false
-      );
-    }
-    this.cart_loading = false;
+  async updateCartQuantitiesBulk(items) {
+    console.log("updating cart quantities.. update.js");
+    const updates = Object.fromEntries(
+      items.map((item) => [item.variantId, item.quantity])
+    );
+    console.log("updates: ", JSON.stringify({ updates }));
+    await fetch(window.Shopify.routes.root + "cart/update.js", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ updates })
+    }).then((response) => {
+      const res = response.json();
+      console.log("update cart bulk response", res);
+      return res;
+    }).catch((error2) => {
+      console.error("Error:", error2);
+    });
   },
   // Call add.js to add cart item then use updateCart()
   async addCartItem(variantID, sellingPlanId, quantity, openCart, enableAudio = true) {
@@ -437,6 +444,41 @@ const cart = {
     this.cart_loading = false;
     this.updateCart(true);
     this.playAudioIfEnabled(this.success_audio);
+  },
+  //add bulk items to cart, single request
+  async addCartItemsBulk(items) {
+    this.playAudioIfEnabled(this.click_audio);
+    const formData = {
+      "items": items.map((item) => ({
+        "id": item.variantId,
+        "quantity": item.quantity
+      }))
+    };
+    console.log("form data: ", formData);
+    return fetch(`${window.Shopify.routes.root}cart/add.js`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(formData)
+    }).then(async (response) => {
+      let data2 = await response.json();
+      if (response.status === 200) {
+        this.playAudioIfEnabled(this.success_audio);
+        this.updateCart(true);
+        console.log("added to cart successfully..");
+      } else {
+        this.error_message = data2.description;
+        this.error_alert = true;
+        this.updateCart(false, false);
+        setTimeout(() => {
+          this.resetQuantityInputs();
+        }, 200);
+      }
+    }).catch((error2) => {
+      console.error("Error:", error2);
+      this.cart_loading = false;
+    });
   },
   // Call add.js to add cart item then use updateCart()
   async editCartItem(oldQuantity, oldVariantId, newVariantId, sellingPlanId) {
@@ -681,6 +723,41 @@ const cart = {
         }
       }
     });
+  },
+  async addBulkToCart() {
+    this.cart_loading = true;
+    const itemsInCart = [];
+    const itemsToAdd = [];
+    const cart2 = this.cart.variantMap;
+    Object.entries(this.variantQuantities).forEach(([id, quantity]) => {
+      if (cart2[id]) {
+        if (cart2[id].quantity !== quantity) {
+          itemsInCart.push(
+            {
+              variantId: Number(id),
+              quantity: Number(quantity)
+            }
+          );
+        }
+      } else {
+        itemsToAdd.push(
+          {
+            variantId: Number(id),
+            quantity: Number(quantity)
+          }
+        );
+      }
+    });
+    if (itemsInCart.length > 0) {
+      const res = await this.updateCartQuantitiesBulk(itemsInCart);
+      console.log("updated cart items: ", res);
+    }
+    if (itemsToAdd.length > 0)
+      await this.addCartItemsBulk(itemsToAdd);
+    this.cart_loading = false;
+    console.log("ready to open cart");
+    this.updateCart(false);
+    this.openCart();
   }
 };
 const search = {
@@ -1326,32 +1403,6 @@ const products = {
     } else {
       this.variantQuantities[variantId] = next;
     }
-  },
-  async addBulkToCart() {
-    const itemsInCart = [];
-    const itemsToAdd = [];
-    const cart2 = this.cart.variantMap;
-    Object.entries(this.variantQuantities).forEach(([id, quantity]) => {
-      if (cart2[id]) {
-        if (cart2[id].quantity !== quantity) {
-          itemsInCart.push(
-            {
-              variantId: Number(id),
-              quantity: Number(quantity)
-            }
-          );
-        }
-      } else {
-        itemsToAdd.push(
-          {
-            variantId: Number(id),
-            quantity: Number(quantity)
-          }
-        );
-      }
-    });
-    await this.changeCartQuantities(itemsInCart);
-    await this.addCartItems(itemsToAdd);
   }
 };
 const collections = {
