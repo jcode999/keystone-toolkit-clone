@@ -6,3 +6,4 @@ sections/styleguide.liquid
 snippets/styleguide__row.liquid
 .DS_Store
 .shopify
+.venv

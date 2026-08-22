@@ -5,3 +5,5 @@ postcss.config.js
 vite.config.ts
 README.md
 manifest.json
+skripts
+.venv
