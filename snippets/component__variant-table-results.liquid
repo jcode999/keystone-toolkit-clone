@@ -148,14 +148,7 @@
         {% comment %} Actions and totals {% endcomment %}
         <div class="flex h-full shrink-0 flex-col items-end justify-between gap-4 text-right md:w-1/3 md:max-w-[400px]">
           <div class="border--l-width color__border-divider-1 flex h-full w-full items-center justify-end py-2 pl-4">
-            {% render 'component__variant-increment-custom',
-              variant: variant,
-              show_totals: true,
-              parent_class: 'w-full',
-              container_class: 'md:max-w-[400px]',
-              input_class: 'max-w-[150px]',
-              is_overlay: is_overlay
-            %}
+            {% render 'component__variant-increment-selector', variant:variant %}
           </div>
         </div>
       </div>

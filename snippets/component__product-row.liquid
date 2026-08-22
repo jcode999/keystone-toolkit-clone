@@ -203,12 +203,7 @@
 
         {% comment %} Adjust quantity {% endcomment %}
         {% for variant in product.variants %}
-          {% render 'component__variant-increment-custom',
-            variant: variant,
-            container_class: 'md:max-w-[300px]',
-            input_class: 'max-w-[150px]',
-            is_overlay: is_overlay
-          %}
+          {% render 'component__variant-increment-selector', variant:variant %}
         {% endfor %}
 
       {% else %}
@@ -599,7 +594,7 @@
           </div>
 
           {% comment %} Prices and actions {% endcomment %}
-          <div class="ml-auto flex flex-col items-end justify-between gap-4 py-4 text-right md:w-auto md:shrink-0">
+          <div x-show="$store.settings.bulkAddToCart" class="ml-auto flex flex-col items-end justify-between gap-4 py-4 text-right md:w-auto md:shrink-0">
             {% if is_approved_customer == true %}
               {{ product_price }}
               {{ product_add }}
@@ -704,13 +699,13 @@
   {% endif %}
 {% endcapture %}
 <div class="max-w-[90%]">
-{% if is_approved_customer == true %}
-  {{ product_item }}
-{% else %}
-  {% if product.tags contains settings.account_hide_product_tag %}
-    {{ product_placeholder }}
-  {% else %}
+  {% if is_approved_customer == true %}
     {{ product_item }}
+  {% else %}
+    {% if product.tags contains settings.account_hide_product_tag %}
+      {{ product_placeholder }}
+    {% else %}
+      {{ product_item }}
+    {% endif %}
   {% endif %}
-{% endif %}
 </div>

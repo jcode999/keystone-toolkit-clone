@@ -348,12 +348,17 @@
             </div>
           </div>
           <div class="border--b-width color__border-divider-1 flex p-2">
+                {%  render 'enable_bulk_add_switch' %}
+          </div>
+          <div class="border--b-width color__border-divider-1 flex p-2">
             <a 
               class="hover:color__bg-shade-1 w-full p-2 text-left no-underline"
               href="{{ routes.account_logout_url }}" >{{ 'actions.log_out' | t }}</a>
           </div>
+          
 
-        </div>  
+        </div>
+        
         
         {{ content_blocks }}
         

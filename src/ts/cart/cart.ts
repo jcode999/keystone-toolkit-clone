@@ -880,6 +880,8 @@ export const cart = {
     console.log("ready to open cart")
     this.updateCart(false)
     this.openCart()
+    
+    
 
   },
 

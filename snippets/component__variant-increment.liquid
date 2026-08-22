@@ -98,7 +98,7 @@
 >
   {% comment %} Template - when item is in cart {% endcomment %}
   <div
-    class="flex w-full items-center justify-between {{ container_class }}"
+    class="flex items-center justify-between {{ container_class }}"
     x-show="isInCart"
     x-cloak
   >
@@ -213,7 +213,7 @@
 
   {% comment %} Template - when item is not in cart {% endcomment %}
   <div
-    class="flex w-full items-center justify-between {{ container_class }}"
+    class="flex items-center justify-between {{ container_class }}"
     x-show="!isInCart"
   >
     <div class="group relative w-full">

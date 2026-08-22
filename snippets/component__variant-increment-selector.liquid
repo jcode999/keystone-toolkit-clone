@@ -1,0 +1,26 @@
+<div class="w-full">
+  <template x-if="$store.settings.bulkAddToCart">
+    <div>
+      {% render 'component__variant-increment-custom',
+        variant: variant,
+        container_class: 'w-full gap-4',
+        input_class: 'max-w-[130px]',
+        is_overlay: is_overlay,
+        show_totals: true
+      %}
+    </div>
+  </template>
+
+  <template x-if="!$store.settings.bulkAddToCart">
+    <div>
+      {% render 'component__variant-increment',
+        variant: variant,
+        show_totals: true,
+        parent_class: 'w-full',
+        container_class: 'w-full gap-4',
+        input_class: 'max-w-[130px]',
+        is_overlay: is_overlay
+      %}
+    </div>
+  </template>
+</div>

@@ -18,6 +18,19 @@ Alpine.plugin(persist);
 Alpine.plugin(focus);
 Alpine.plugin(intersect);
 
+document.addEventListener('alpine:init', () => {
+  console.log("bulk add event listner")
+  Alpine.store('settings', {
+    bulkAddToCart: JSON.parse(localStorage.getItem('bulkAddToCart') ?? 'false'),
+
+    toggleBulkAddToCart() {
+      this.bulkAddToCart = !this.bulkAddToCart;
+      localStorage.setItem('bulkAddToCart', JSON.stringify(this.bulkAddToCart));
+      window.location.reload();
+    },
+  });
+})
+
 // Assign Alpine to the window object to make it globally accessible
 window.Alpine = Alpine;
 
