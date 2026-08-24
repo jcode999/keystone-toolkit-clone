@@ -8048,5 +8048,16 @@ var module_default = src_default;
 module_default$3.plugin(module_default);
 module_default$3.plugin(module_default$2);
 module_default$3.plugin(module_default$1);
+document.addEventListener("alpine:init", () => {
+  console.log("bulk add event listner");
+  module_default$3.store("settings", {
+    bulkAddToCart: JSON.parse(localStorage.getItem("bulkAddToCart") ?? "false"),
+    toggleBulkAddToCart() {
+      this.bulkAddToCart = !this.bulkAddToCart;
+      localStorage.setItem("bulkAddToCart", JSON.stringify(this.bulkAddToCart));
+      window.location.reload();
+    }
+  });
+});
 window.Alpine = module_default$3;
 module_default$3.start();
