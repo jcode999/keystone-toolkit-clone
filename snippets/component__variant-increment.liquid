@@ -118,6 +118,7 @@
           type="number"
           placeholder="0"
           min="1"
+          max="{{ variant.inventory_quantity }}"
           x-model="quantity"
           @change.debounce="
             button_loading = true;
@@ -237,6 +238,7 @@
           type="number"
           placeholder="0"
           min="1"
+          max="{{ variant.inventory_quantity }}"
           x-model="quantity"
           {% unless variant.available %}
             disabled

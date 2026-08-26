@@ -682,16 +682,12 @@ export const products = {
 
 
   filter(filter_text: string, root: HTMLElement) {
-    console.log('filter text:', filter_text)
-
     const query = filter_text.toLowerCase().trim()
-    console.log(this.root);
     const rows = this.$root.querySelectorAll(
       '.js-results > div, [class*="js-pagination-landing-"] > div'
     ) as NodeListOf<HTMLElement>
 
     rows.forEach((row) => {
-      console.log('row title:', row.dataset.variantTitle)
 
       const title = row.dataset.variantTitle?.toLowerCase() ?? ''
       const sku = row.dataset.variantSku?.toLowerCase() ?? ''
@@ -704,7 +700,6 @@ export const products = {
 
       row.classList.toggle('flex', matches)
 
-      console.log('row hidden:', row.hidden)
     })
   },
 
@@ -718,17 +713,17 @@ export const products = {
   },
 
   incrementVariantQty(variantId: number, step: number = 1) {
-    console.log("increasing quantity for variant id: ", variantId)
+
     const current = this.variantQuantities[variantId] || 0;
     this.variantQuantities[variantId] = current + step;
-    console.log("quantities after add", this.variantQuantities)
+
   },
 
   decrementVariantQty(variantId: number, step: number = 1) {
     const current = this.variantQuantities[variantId] || 0;
     const next = current - step;
 
-    if (next <= 0) {
+    if (next < 0) {
       delete this.variantQuantities[variantId];
     } else {
       this.variantQuantities[variantId] = next;

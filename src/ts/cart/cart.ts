@@ -21,7 +21,6 @@ export const cart = {
 
   // Update cart with fetched data
   async updateCart(openCart: boolean, openAlert: boolean = true) {
-    console.log("updating cart with fresh data, open cart: ",openCart)
     // Reset global properties
     this.cart_loading = true;
     this.enable_body_scrolling = true;
@@ -203,7 +202,6 @@ export const cart = {
     openCart: boolean,
     refresh: boolean,
   ) {
-    console.log("changing cart items.")
     // Play audio
     this.playAudioIfEnabled(this.click_audio);
 
@@ -288,12 +286,10 @@ export const cart = {
   },
 
   async updateCartQuantitiesBulk(items: CartItem[]) {
-    console.log("updating cart quantities.. update.js")
     
     const updates = Object.fromEntries(
       items.map(item => [item.variantId, item.quantity])
     );
-    console.log("updates: ", JSON.stringify({ updates }))
     await fetch(window.Shopify.routes.root + 'cart/update.js', {
       method: 'POST',
       headers: {
@@ -303,7 +299,6 @@ export const cart = {
     })
       .then(response => {
         const res =  response.json()
-        console.log("update cart bulk response", res)
         return res;
 
       })
@@ -446,7 +441,6 @@ export const cart = {
         'quantity': item.quantity
       }))
     }
-    console.log("form data: ", formData)
     return fetch(`${window.Shopify.routes.root}cart/add.js`, {
       method: "POST",
       headers: {
@@ -461,7 +455,6 @@ export const cart = {
         if (response.status === 200) {
           this.playAudioIfEnabled(this.success_audio);
           this.updateCart(true);
-          console.log("added to cart successfully..")
 
         }
 
@@ -840,7 +833,8 @@ export const cart = {
     //separate change and update
     const itemsInCart: {
       variantId: number,
-      quantity: number
+      quantity: number,
+      key:string,
     }[] = [];
     const itemsToAdd: {
       variantId: number,
@@ -855,6 +849,7 @@ export const cart = {
             {
               variantId: Number(id),
               quantity: Number(quantity),
+              key:cart[id].key,
             }
           );
         }
@@ -869,15 +864,15 @@ export const cart = {
     });
 
     if (itemsInCart.length > 0){
-      const res = await this.updateCartQuantitiesBulk(itemsInCart)
-      console.log("updated cart items: ",res)
+      for (const item of itemsInCart){
+        await this.changeCartItemQuantity(item.key,item.quantity,false,false)
+      }
     }
 
     if (itemsToAdd.length > 0)
       await this.addCartItemsBulk(itemsToAdd)
 
     this.cart_loading = false;
-    console.log("ready to open cart")
     this.updateCart(false)
     this.openCart()
     
