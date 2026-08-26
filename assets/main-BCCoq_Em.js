@@ -170,7 +170,6 @@ const cart = {
   },
   // Update cart with fetched data
   async updateCart(openCart, openAlert = true) {
-    console.log("updating cart with fresh data, open cart: ", openCart);
     this.cart_loading = true;
     this.enable_body_scrolling = true;
     try {
@@ -294,7 +293,6 @@ const cart = {
   },
   // Call change.js to update cart item then use updateCart()
   async changeCartItemQuantity(key, quantity, openCart, refresh) {
-    console.log("changing cart items.");
     this.playAudioIfEnabled(this.click_audio);
     this.cart_loading = true;
     let formData = {
@@ -346,11 +344,9 @@ const cart = {
     this.debounceTimeouts.set(target, timeout);
   },
   async updateCartQuantitiesBulk(items) {
-    console.log("updating cart quantities.. update.js");
     const updates = Object.fromEntries(
       items.map((item) => [item.variantId, item.quantity])
     );
-    console.log("updates: ", JSON.stringify({ updates }));
     await fetch(window.Shopify.routes.root + "cart/update.js", {
       method: "POST",
       headers: {
@@ -359,7 +355,6 @@ const cart = {
       body: JSON.stringify({ updates })
     }).then((response) => {
       const res = response.json();
-      console.log("update cart bulk response", res);
       return res;
     }).catch((error2) => {
       console.error("Error:", error2);
@@ -454,7 +449,6 @@ const cart = {
         "quantity": item.quantity
       }))
     };
-    console.log("form data: ", formData);
     return fetch(`${window.Shopify.routes.root}cart/add.js`, {
       method: "POST",
       headers: {
@@ -466,7 +460,6 @@ const cart = {
       if (response.status === 200) {
         this.playAudioIfEnabled(this.success_audio);
         this.updateCart(true);
-        console.log("added to cart successfully..");
       } else {
         this.error_message = data2.description;
         this.error_alert = true;
@@ -735,7 +728,8 @@ const cart = {
           itemsInCart.push(
             {
               variantId: Number(id),
-              quantity: Number(quantity)
+              quantity: Number(quantity),
+              key: cart2[id].key
             }
           );
         }
@@ -749,13 +743,13 @@ const cart = {
       }
     });
     if (itemsInCart.length > 0) {
-      const res = await this.updateCartQuantitiesBulk(itemsInCart);
-      console.log("updated cart items: ", res);
+      for (const item of itemsInCart) {
+        await this.changeCartItemQuantity(item.key, item.quantity, false, false);
+      }
     }
     if (itemsToAdd.length > 0)
       await this.addCartItemsBulk(itemsToAdd);
     this.cart_loading = false;
-    console.log("ready to open cart");
     this.updateCart(false);
     this.openCart();
   }
@@ -1366,21 +1360,17 @@ const products = {
     return variants;
   },
   filter(filter_text, root) {
-    console.log("filter text:", filter_text);
     const query = filter_text.toLowerCase().trim();
-    console.log(this.root);
     const rows = this.$root.querySelectorAll(
       '.js-results > div, [class*="js-pagination-landing-"] > div'
     );
     rows.forEach((row) => {
       var _a, _b;
-      console.log("row title:", row.dataset.variantTitle);
       const title = ((_a = row.dataset.variantTitle) == null ? void 0 : _a.toLowerCase()) ?? "";
       const sku = ((_b = row.dataset.variantSku) == null ? void 0 : _b.toLowerCase()) ?? "";
       const matches2 = title.includes(query) || sku.includes(query);
       row.hidden = !matches2;
       row.classList.toggle("flex", matches2);
-      console.log("row hidden:", row.hidden);
     });
   },
   get cartVariants() {
@@ -1390,15 +1380,13 @@ const products = {
     }));
   },
   incrementVariantQty(variantId, step = 1) {
-    console.log("increasing quantity for variant id: ", variantId);
     const current = this.variantQuantities[variantId] || 0;
     this.variantQuantities[variantId] = current + step;
-    console.log("quantities after add", this.variantQuantities);
   },
   decrementVariantQty(variantId, step = 1) {
     const current = this.variantQuantities[variantId] || 0;
     const next = current - step;
-    if (next <= 0) {
+    if (next < 0) {
       delete this.variantQuantities[variantId];
     } else {
       this.variantQuantities[variantId] = next;
