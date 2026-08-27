@@ -1757,6 +1757,9 @@ img:after {
 .w-\[100\%\] {
   width: 100%;
 }
+.w-\[130px\] {
+  width: 130px;
+}
 .w-\[15\%\] {
   width: 15%;
 }
@@ -1874,9 +1877,6 @@ img:after {
 }
 .max-w-\[70\%\] {
   max-width: 70%;
-}
-.max-w-\[90\%\] {
-  max-width: 90%;
 }
 .max-w-full {
   max-width: 100%;
@@ -4563,6 +4563,9 @@ video::-webkit-media-controls-panel {
 @media (min-width: 640px) {
   .sm\:block {
     display: block;
+  }
+  .sm\:max-w-\[90\%\] {
+    max-width: 90%;
   }
   .sm\:p-0 {
     padding: 0px;
