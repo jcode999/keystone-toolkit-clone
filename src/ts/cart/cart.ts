@@ -705,7 +705,7 @@ export const cart = {
       summary[productId].total_final_line_price += item.final_line_price;
       // set total variant quantity as item's property 
       item.variantTotalCartCount = variantCounts[variantId]
-      
+
       // Build grouped items
       if (!groupedItems[productId]) {
         groupedItems[productId] = {
@@ -856,12 +856,14 @@ export const cart = {
     const cart = this.cart.variantMap
     Object.entries(this.variantQuantities).forEach(([id, quantity]) => {
       if (cart[id]) {
-        if (cart[id][0].quantity !== quantity) {
+        if (cart[id][0].variantTotalCartCount !== quantity) {
+          console.log("existing items modified..")
+          const change = this.getChangeQuantity(quantity,cart[id][0].quantity,id)
           itemsInCart.push(
             {
               variantId: Number(id),
-              quantity: Number(quantity),
-              key: cart[id].key,
+              quantity: change,
+              key: cart[id][0].key,
             }
           );
         }

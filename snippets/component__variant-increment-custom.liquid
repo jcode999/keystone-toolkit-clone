@@ -87,7 +87,7 @@
         return !!this.cartItem;
       },
       get cartItem() {
-          return (cart.variantMap && cart.variantMap[this.variantId]) || null;
+          return this.getCartItem({{ variant.id }})
         },
 
       init() {
@@ -100,7 +100,7 @@
       },
 
       updateQuantity() {
-        this.quantity = this.cartItem ? this.cartItem.quantity : '';
+        this.quantity = this.getTotalQuantity({{ variant.id }});
       }
     }
   "
