@@ -316,6 +316,7 @@ const cart = {
           window.location.reload();
         } else {
           this.playAudioIfEnabled(this.success_audio);
+          console.log("cart changed... updating");
           this.updateCart(openCart);
         }
       } else {
@@ -609,6 +610,10 @@ const cart = {
     const summary = {};
     const groupedItems = {};
     const variantMap = {};
+    const variantCounts = this.cart.items.reduce((acc, item) => {
+      acc[item.variant_id] = (acc[item.variant_id] || 0) + item.quantity;
+      return acc;
+    }, {});
     for (const item of this.cart.items) {
       const productId = item.product_id;
       const variantId = item.variant_id;
@@ -621,6 +626,7 @@ const cart = {
       }
       summary[productId].quantity += item.quantity;
       summary[productId].total_final_line_price += item.final_line_price;
+      item.variantTotalCartCount = variantCounts[variantId];
       if (!groupedItems[productId]) {
         groupedItems[productId] = {
           product_title: item.product_title,
@@ -632,7 +638,10 @@ const cart = {
         };
       }
       groupedItems[productId].items.push(item);
-      variantMap[variantId] = item;
+      if (variantMap[variantId]) {
+        variantMap[variantId].push(item);
+      } else
+        variantMap[variantId] = [item];
     }
     this._lastCartItemsHash = currentHash;
     this._memoizedSummary = summary;
@@ -724,12 +733,14 @@ const cart = {
     const cart2 = this.cart.variantMap;
     Object.entries(this.variantQuantities).forEach(([id, quantity]) => {
       if (cart2[id]) {
-        if (cart2[id].quantity !== quantity) {
+        if (cart2[id][0].variantTotalCartCount !== quantity) {
+          console.log("existing items modified..");
+          const change = this.getChangeQuantity(quantity, cart2[id][0].quantity, id);
           itemsInCart.push(
             {
               variantId: Number(id),
-              quantity: Number(quantity),
-              key: cart2[id].key
+              quantity: change,
+              key: cart2[id][0].key
             }
           );
         }
@@ -752,6 +763,17 @@ const cart = {
     this.cart_loading = false;
     this.updateCart(false);
     this.openCart();
+  },
+  getCartItem(variantId) {
+    var _a, _b;
+    return ((_b = (_a = this.cart.variantMap) == null ? void 0 : _a[variantId]) == null ? void 0 : _b[0]) || null;
+  },
+  getTotalQuantity(variantId) {
+    var _a;
+    return (((_a = this.cart.variantMap) == null ? void 0 : _a[variantId]) || []).reduce((total, item) => total + item.quantity, 0);
+  },
+  getChangeQuantity(newTotalCartQuantity, thisCartItemQuantity, variantId) {
+    return newTotalCartQuantity - (this.getTotalQuantity(variantId) - thisCartItemQuantity);
   }
 };
 const search = {
