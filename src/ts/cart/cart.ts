@@ -237,6 +237,7 @@ export const cart = {
           window.location.reload();
         } else {
           this.playAudioIfEnabled(this.success_audio);
+          console.log("cart changed... updating")
           this.updateCart(openCart);
         }
       }
@@ -286,7 +287,7 @@ export const cart = {
   },
 
   async updateCartQuantitiesBulk(items: CartItem[]) {
-    
+
     const updates = Object.fromEntries(
       items.map(item => [item.variantId, item.quantity])
     );
@@ -298,7 +299,7 @@ export const cart = {
       body: JSON.stringify({ updates })
     })
       .then(response => {
-        const res =  response.json()
+        const res = response.json()
         return res;
 
       })
@@ -309,7 +310,7 @@ export const cart = {
 
 
 
-    
+
 
   },
 
@@ -668,7 +669,6 @@ export const cart = {
   // Optimized cart sorting with memoization
   sortCartItems() {
     const currentHash = this._generateCartHash(this.cart.items);
-
     // Return cached results if cart hasn't changed
     if (currentHash === this._lastCartItemsHash && this._memoizedSummary && this._memoizedGroupedItems) {
       this.cart.summary = this._memoizedSummary;
@@ -681,10 +681,17 @@ export const cart = {
     const groupedItems: Record<string, any> = {};
     const variantMap: Record<string, any> = {};
 
+    //map out variant and their total cart quantities
+    const variantCounts = this.cart.items.reduce((acc: any, item: any) => {
+      acc[item.variant_id] = (acc[item.variant_id] || 0) + item.quantity;
+      return acc;
+    }, {});
+
     // Single pass through items to build summary, grouped items, and variant map
     for (const item of this.cart.items) {
       const productId = item.product_id;
       const variantId = item.variant_id;
+
 
       // Build summary
       if (!summary[productId]) {
@@ -696,7 +703,9 @@ export const cart = {
       }
       summary[productId].quantity += item.quantity;
       summary[productId].total_final_line_price += item.final_line_price;
-
+      // set total variant quantity as item's property 
+      item.variantTotalCartCount = variantCounts[variantId]
+      
       // Build grouped items
       if (!groupedItems[productId]) {
         groupedItems[productId] = {
@@ -710,8 +719,12 @@ export const cart = {
       }
       groupedItems[productId].items.push(item);
 
-      // Build variant map for O(1) lookups
-      variantMap[variantId] = item;
+      // Build variant map for O(1) lookups 
+      if (variantMap[variantId]) {
+        variantMap[variantId].push(item)
+      }
+      else
+        variantMap[variantId] = [item]
     }
 
     // Cache results
@@ -834,22 +847,21 @@ export const cart = {
     const itemsInCart: {
       variantId: number,
       quantity: number,
-      key:string,
+      key: string,
     }[] = [];
     const itemsToAdd: {
       variantId: number,
       quantity: number
     }[] = [];
-
     const cart = this.cart.variantMap
     Object.entries(this.variantQuantities).forEach(([id, quantity]) => {
       if (cart[id]) {
-        if (cart[id].quantity !== quantity) {
+        if (cart[id][0].quantity !== quantity) {
           itemsInCart.push(
             {
               variantId: Number(id),
               quantity: Number(quantity),
-              key:cart[id].key,
+              key: cart[id].key,
             }
           );
         }
@@ -863,9 +875,9 @@ export const cart = {
       }
     });
 
-    if (itemsInCart.length > 0){
-      for (const item of itemsInCart){
-        await this.changeCartItemQuantity(item.key,item.quantity,false,false)
+    if (itemsInCart.length > 0) {
+      for (const item of itemsInCart) {
+        await this.changeCartItemQuantity(item.key, item.quantity, false, false)
       }
     }
 
@@ -875,9 +887,22 @@ export const cart = {
     this.cart_loading = false;
     this.updateCart(false)
     this.openCart()
-    
-    
+
+
 
   },
+
+  getCartItem(variantId: number | string) {
+    return this.cart.variantMap?.[variantId]?.[0] || null
+  },
+
+  getTotalQuantity(variantId: string | number) {
+    return (this.cart.variantMap?.[variantId] || []).reduce((total: number, item: { quantity: number; }) => total + item.quantity, 0);
+  },
+
+  getChangeQuantity(newTotalCartQuantity: number, thisCartItemQuantity: number, variantId: string | number) {
+    return newTotalCartQuantity - (this.getTotalQuantity(variantId) - thisCartItemQuantity)
+    
+  }
 
 };
