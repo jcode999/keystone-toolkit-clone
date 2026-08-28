@@ -89,25 +89,12 @@
       items: [
         {% for item in cart.items %}
           {
-            variant_id: {{ item.variant_id }}, // {number} Variant ID of the item
+            {% comment %} variant_id: {{ item.variant_id }}, // {number} Variant ID of the item
             final_price: {{ item.final_price }}, // {number} Final price of the item
             quantity: {{ item.quantity }}, // {number} Quantity of the item
             unit_price: 0, // {number} Unit price of the item
-            unit_price_measurement: {} // {string} Measurement of the unit price
-          },
-        {% endfor %}
-      ],
-      note: {{ cart.note | default: '' | json }}, // {string} Note for the cart
-      item_count: {{ cart.item_count }}, // {number} Count of items in the cart
-      total_price: {{ cart.total_price }}, // {number} Total price of the cart
-      original_total_price: {{ cart.original_total_price }}, // {number} Original total price of the cart
-      total_discount: {{ cart.total_discount }}, // {number} Total discount of the cart
-      progress_bar_delay_width: 0, // {number} Width of the delay bar in cart alerts
-      progress_bar_remaining: 0, // {number} Remaining amount - e.g. 'Spend X more for free shipping'
-      progress_bar_percent: '0%', // {string} Percent to reaching free shipping
-      variantMap: {
-        {% for item in cart.items %}
-          {{ item.variant_id }}: {
+            unit_price_measurement: {}, // {string} Measurement of the unit price
+            key: '{{ item.key }}', {% endcomment %}
             variant_id: {{ item.variant_id }},
             key: '{{ item.key }}',
             quantity: {{ item.quantity }},
@@ -129,9 +116,18 @@
             properties: {{ item.properties | default: hash | json }},
             selling_plan_allocation: {{ item.selling_plan_allocation | default: nil | json }},
             discounts: {{ item.discounts | default: array | json }}
-          }{% unless forloop.last %},{% endunless %}
+          },
         {% endfor %}
-      }, // {object} Map of variant IDs to cart items for O(1) lookups
+      ],
+      note: {{ cart.note | default: '' | json }}, // {string} Note for the cart
+      item_count: {{ cart.item_count }}, // {number} Count of items in the cart
+      total_price: {{ cart.total_price }}, // {number} Total price of the cart
+      original_total_price: {{ cart.original_total_price }}, // {number} Original total price of the cart
+      total_discount: {{ cart.total_discount }}, // {number} Total discount of the cart
+      progress_bar_delay_width: 0, // {number} Width of the delay bar in cart alerts
+      progress_bar_remaining: 0, // {number} Remaining amount - e.g. 'Spend X more for free shipping'
+      progress_bar_percent: '0%', // {string} Percent to reaching free shipping
+      variantMap: {}
     },
 
     // Search
@@ -157,6 +153,12 @@
     enable_currency: {{ settings.enable_currency }}, // {Boolean} Set to false to hide 'CAD'
 
   });
+  // Group line items by variant_id — a variant can have multiple line items
+  // (different properties, selling plans, etc.), so this is always an array.
+  window.__initialData.cart.variantMap = window.__initialData.cart.items.reduce((map, item) => {
+    (map[item.variant_id] ??= []).push(item);
+    return map;
+  }, {});
 </script>
 
 {% if template.directory == 'customers' %}
