@@ -73,7 +73,7 @@
 
       // Computed property for cart item - O(1) lookup
       get cartItem() {
-        return (cart.variantMap && cart.variantMap[this.variantId]) || null;
+        return this.getCartItem({{ variant.id }})
       },
 
       // Computed property to check if item is in cart
@@ -84,13 +84,13 @@
       init() {
         this.updateQuantity();
         // Only watch the specific variant's quantity, not the entire cart
-        this.$watch('cartItem?.quantity', () => {
+        this.$watch('cartItem?.variantTotalCartCount', () => {
           this.updateQuantity();
         });
       },
 
       updateQuantity() {
-        this.quantity = this.cartItem ? this.cartItem.quantity : '';
+        this.quantity = this.getTotalQuantity({{ variant.id }});
       }
     }
   "
@@ -122,10 +122,11 @@
           x-model="quantity"
           @change.debounce="
             button_loading = true;
+            const change = getChangeQuantity(quantity, cartItem.quantity, {{ variant.id }})
             if (cartItem) {
               changeCartItemQuantity(
                 cartItem.key,
-                quantity,
+                change,
                 {{ open_cart }},
                 false
               );
@@ -153,10 +154,11 @@
             @click.prevent="
               button_loading = true;
               quantity = Number(quantity) - {{ variant.quantity_rule.increment }};
+              const change = getChangeQuantity(quantity, cartItem.quantity, {{ variant.id }})
               if (cartItem && cartItem.quantity >= 1){
                 changeCartItemQuantityDebounced(
                   cartItem.key,
-                  quantity,
+                  change,
                   {{ open_cart }},
                   false,
                   $event.target
@@ -178,10 +180,11 @@
             @click.prevent="
               button_loading = true;
               quantity = Number(quantity) + {{ variant.quantity_rule.increment }};
+              const change = getChangeQuantity(quantity, cartItem.quantity, {{ variant.id }})
               if (cartItem) {
                 changeCartItemQuantityDebounced(
                   cartItem.key,
-                  quantity,
+                  change,
                   {{ open_cart }},
                   false,
                   $event.target
